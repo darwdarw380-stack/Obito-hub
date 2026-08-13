@@ -1,0 +1,373 @@
+-- Obito Hub - Ultimate Prime Version for Delta
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
+local LocalPlayer = Players.LocalPlayer
+local Workspace = game:GetService("Workspace")
+
+-- Main GUI Creation
+local ObitoGui = Instance.new("ScreenGui")
+ObitoGui.Name = "ObitoHubPrime"
+ObitoGui.Parent = CoreGui
+ObitoGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+-- Main Container
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ObitoGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
+MainFrame.BorderSizePixel = 0
+MainFrame.Position = UDim2.new(0.5, -180, 0.5, -200)
+MainFrame.Size = UDim2.new(0, 360, 0, 420)
+MainFrame.Active = true
+MainFrame.Draggable = true
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 8)
+MainCorner.Parent = MainFrame
+
+-- Top Bar
+local TopBar = Instance.new("Frame")
+TopBar.Name = "TopBar"
+TopBar.Parent = MainFrame
+TopBar.BackgroundColor3 = Color3.fromRGB(25, 25, 32)
+TopBar.Size = UDim2.new(1, 0, 0, 40)
+
+local TopCorner = Instance.new("UICorner")
+TopCorner.CornerRadius = UDim.new(0, 8)
+TopCorner.Parent = TopBar
+
+local Title = Instance.new("TextLabel")
+Title.Parent = TopBar
+Title.BackgroundTransparency = 1
+Title.Position = UDim2.new(0, 10, 0, 0)
+Title.Size = UDim2.new(0.6, 0, 1, 0)
+Title.Font = Enum.Font.GothamBold
+Title.Text = "OBITO HUB PRIME"
+Title.TextColor3 = Color3.fromRGB(220, 180, 255)
+Title.TextSize = 13
+Title.TextXAlignment = Enum.TextXAlignment.Left
+
+-- Target Thumbnail Profile Image
+local TargetImage = Instance.new("ImageLabel")
+TargetImage.Name = "TargetImage"
+TargetImage.Parent = TopBar
+TargetImage.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+TargetImage.Position = UDim2.new(1, -35, 0.5, -12)
+TargetImage.Size = UDim2.new(0, 24, 0, 24)
+TargetImage.Image = "rbxassetid://0"
+
+local ImgCorner = Instance.new("UICorner")
+ImgCorner.CornerRadius = UDim.new(1, 0)
+ImgCorner.Parent = TargetImage
+
+-- Tab System Holder
+local TabContainer = Instance.new("Frame")
+TabContainer.Parent = MainFrame
+TabContainer.BackgroundColor3 = Color3.fromRGB(22, 22, 28)
+TabContainer.Position = UDim2.new(0, 8, 0, 48)
+TabContainer.Size = UDim2.new(1, -16, 0, 28)
+
+local TabCorner = Instance.new("UICorner")
+TabCorner.CornerRadius = UDim.new(0, 5)
+TabCorner.Parent = TabContainer
+
+local UIhorizontalLayout = Instance.new("UIListLayout")
+UIhorizontalLayout.Parent = TabContainer
+UIhorizontalLayout.FillDirection = Enum.FillDirection.Horizontal
+UIhorizontalLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIhorizontalLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIhorizontalLayout.Padding = UDim.new(0, 4)
+
+-- Content Pages Frame Container
+local PagesContainer = Instance.new("Frame")
+PagesContainer.Parent = MainFrame
+PagesContainer.BackgroundTransparency = 1
+PagesContainer.Position = UDim2.new(0, 8, 0, 82)
+PagesContainer.Size = UDim2.new(1, -16, 1, -90)
+
+-- Function to Create Tabs & Pages
+local function CreateTab(name)
+    local Page = Instance.new("ScrollingFrame")
+    Page.Name = name .. "Page"
+    Page.Parent = PagesContainer
+    Page.BackgroundTransparency = 1
+    Page.Size = UDim2.new(1, 0, 1, 0)
+    Page.CanvasSize = UDim2.new(0, 0, 1.4, 0)
+    Page.ScrollBarThickness = 2
+    Page.Visible = false
+    
+    local PList = Instance.new("UIListLayout")
+    PList.Parent = Page
+    PList.SortOrder = Enum.SortOrder.LayoutOrder
+    PList.Padding = UDim.new(0, 6)
+    
+    local TabBtn = Instance.new("TextButton")
+    TabBtn.Parent = TabContainer
+    TabBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+    TabBtn.Size = UDim2.new(0, 80, 0, 22)
+    TabBtn.Font = Enum.Font.GothamBold
+    TabBtn.Text = name
+    TabBtn.TextColor3 = Color3.fromRGB(160, 160, 160)
+    TabBtn.TextSize = 10
+    
+    local TBtnCorner = Instance.new("UICorner")
+    TBtnCorner.CornerRadius = UDim.new(0, 4)
+    TBtnCorner.Parent = TabBtn
+    
+    TabBtn.MouseButton1Click:Connect(function()
+        for _, p in pairs(PagesContainer:GetChildren()) do
+            if p:IsA("ScrollingFrame") then p.Visible = false end
+        end
+        for _, b in pairs(TabContainer:GetChildren()) do
+            if b:IsA("TextButton") then b.BackgroundColor3 = Color3.fromRGB(30, 30, 40); b.TextColor3 = Color3.fromRGB(160, 160, 160) end
+        end
+        Page.Visible = true
+        TabBtn.BackgroundColor3 = Color3.fromRGB(90, 30, 180)
+        TabBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    end)
+    
+    return Page
+end
+
+-- Create Tabs
+local MainTabPage = CreateTab("Troll")
+local PlayersTabPage = CreateTab("Extra")
+local HuntedTabPage = CreateTab("Hunted")
+
+-- Helper to create clean compact Toggle buttons
+local function CreateToggleComponent(parent, name, callback)
+    local Frame = Instance.new("Frame")
+    Frame.Parent = parent
+    Frame.BackgroundColor3 = Color3.fromRGB(24, 24, 30)
+    Frame.Size = UDim2.new(1, 0, 0, 30)
+    
+    local FCorner = Instance.new("UICorner")
+    FCorner.CornerRadius = UDim.new(0, 5)
+    FCorner.Parent = Frame
+    
+    local Label = Instance.new("TextLabel")
+    Label.Parent = Frame
+    Label.BackgroundTransparency = 1
+    Label.Position = UDim2.new(0, 8, 0, 0)
+    Label.Size = UDim2.new(0.7, 0, 1, 0)
+    Label.Font = Enum.Font.GothamMedium
+    Label.Text = name
+    Label.TextColor3 = Color3.fromRGB(200, 200, 200)
+    Label.TextSize = 11
+    Label.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local SquareBtn = Instance.new("TextButton")
+    SquareBtn.Parent = Frame
+    SquareBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+    SquareBtn.Position = UDim2.new(1, -28, 0.5, -9)
+    SquareBtn.Size = UDim2.new(0, 18, 0, 18)
+    SquareBtn.Font = Enum.Font.GothamBold
+    SquareBtn.Text = ""
+    
+    local SCorner = Instance.new("UICorner")
+    SCorner.CornerRadius = UDim.new(0, 3)
+    SCorner.Parent = SquareBtn
+    
+    local toggled = false
+    SquareBtn.MouseButton1Click:Connect(function()
+        toggled = not toggled
+        if toggled then
+            SquareBtn.BackgroundColor3 = Color3.fromRGB(0, 180, 80)
+        else
+            SquareBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+        end
+        callback(toggled)
+    end)
+end
+
+-- Variables
+local SelectedTarget = nil
+local Mouse = LocalPlayer:GetMouse()
+
+-- Click to Select Target
+Mouse.Button1Down:Connect(function()
+    if Mouse.Target and Mouse.Target.Parent:FindFirstChild("Humanoid") then
+        local foundPlayer = Players:GetPlayerFromCharacter(Mouse.Target.Parent)
+        if foundPlayer then
+            SelectedTarget = foundPlayer
+            TargetImage.Image = Players:GetUserThumbnailAsync(foundPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
+        end
+    end
+end)
+
+-- 1. TROLL TAB (Prime Bang with Arms up, Fast Bang, Orbit, Sit)
+local PrimeBangActive = false
+CreateToggleComponent(MainTabPage, "by obito prime (بانگی بەهێز و ڕاستەقینە)", function(state)
+    PrimeBangActive = state
+    task.spawn(function()
+        while PrimeBangActive do
+            task.wait(0.005)
+            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                local tHRP = SelectedTarget.Character.HumanoidRootPart
+                local mHRP = LocalPlayer.Character.HumanoidRootPart
+                local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+                
+                -- Fast realistic thrust movement simulation
+                local speedOffset = math.abs(math.sin(tick() * 45)) * 1.4
+                mHRP.CFrame = tHRP.CFrame * CFrame.new(0, 0, 0.6 + speedOffset) * CFrame.Angles(math.rad(15), 0, 0)
+                
+                if hum then
+                    hum.PlatformStand = true
+                end
+            end
+        end
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+            LocalPlayer.Character.Humanoid.PlatformStand = false
+        end
+    end)
+end)
+
+local SuperFastBangActive = false
+CreateToggleComponent(MainTabPage, "Super Fast Bang (سەریعی بانگ)", function(state)
+    SuperFastBangActive = state
+    task.spawn(function()
+        while SuperFastBangActive do
+            task.wait(0.001)
+            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                local tHRP = SelectedTarget.Character.HumanoidRootPart
+                local mHRP = LocalPlayer.Character.HumanoidRootPart
+                local speedOffset = math.sin(tick() * 70) * 0.9
+                mHRP.CFrame = tHRP.CFrame * CFrame.new(0, 0, 0.7 + speedOffset)
+            end
+        end
+    end)
+end)
+
+local OrbitActive = false
+CreateToggleComponent(MainTabPage, "Orbit Target (خولانەوە بە دەوریدا)", function(state)
+    OrbitActive = state
+    task.spawn(function()
+        local angle = 0
+        while OrbitActive do
+            task.wait(0.01)
+            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                local tHRP = SelectedTarget.Character.HumanoidRootPart
+                local mHRP = LocalPlayer.Character.HumanoidRootPart
+                angle = angle + 0.15
+                local radius = 4
+                local x = math.cos(angle) * radius
+                local z = math.sin(angle) * radius
+                mHRP.CFrame = CFrame.new(tHRP.Position + Vector3.new(x, 0.5, z), tHRP.Position)
+            end
+        end
+    end)
+end)
+
+local SitBackActive = false
+CreateToggleComponent(MainTabPage, "Back Bag Sit (دانیشتنی جانتا)", function(state)
+    SitBackActive = state
+    task.spawn(function()
+        while SitBackActive do
+            task.wait(0.02)
+            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                local tHRP = SelectedTarget.Character.HumanoidRootPart
+                local mHRP = LocalPlayer.Character.HumanoidRootPart
+                mHRP.CFrame = tHRP.CFrame * CFrame.new(0, 0.5, 1.1)
+                local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+                if hum then hum.Sit = true end
+            end
+        end
+    end)
+end)
+
+-- 2. EXTRA TAB (ESP, Noclip, Inf Jump)
+CreateToggleComponent(PlayersTabPage, "ESP Players", function(state)
+    for _, p in pairs(Players:GetPlayers()) do
+        if p ~= LocalPlayer and p.Character then
+            if state then
+                local hl = Instance.new("Highlight")
+                hl.Name = "ObitoESP"
+                hl.Adornee = p.Character
+                hl.FillColor = Color3.fromRGB(255, 0, 0)
+                hl.Parent = p.Character
+            else
+                if p.Character:FindFirstChild("ObitoESP") then
+                    p.Character.ObitoESP:Destroy()
+                end
+            end
+        end
+    end
+end)
+
+local NoclipEnabled = false
+RunService.Stepped:Connect(function()
+    if NoclipEnabled and LocalPlayer.Character then
+        for _, part in pairs(LocalPlayer.Character:GetDescendants()) do
+            if part:IsA("BasePart") then part.CanCollide = false end
+        end
+    end
+end)
+CreateToggleComponent(PlayersTabPage, "Noclip", function(state)
+    NoclipEnabled = state
+end)
+
+local InfJumpEnabled = false
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if InfJumpEnabled and LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+        LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+    end
+end)
+CreateToggleComponent(PlayersTabPage, "Infinite Jump", function(state)
+    InfJumpEnabled = state
+end)
+
+-- 3. HUNTED TAB
+local HuntedScroll = Instance.new("ScrollingFrame")
+HuntedScroll.Parent = HuntedTabPage
+HuntedScroll.BackgroundTransparency = 1
+HuntedScroll.Size = UDim2.new(1, 0, 1, 0)
+HuntedScroll.CanvasSize = UDim2.new(0, 0, 2, 0)
+HuntedScroll.ScrollBarThickness = 2
+
+local HuntedLayout = Instance.new("UIListLayout")
+HuntedLayout.Parent = HuntedScroll
+HuntedLayout.SortOrder = Enum.SortOrder.LayoutOrder
+HuntedLayout.Padding = UDim.new(0, 4)
+
+Mouse.Button1Down:Connect(function()
+    if Mouse.Target and Mouse.Target.Parent:FindFirstChild("Humanoid") then
+        local p = Players:GetPlayerFromCharacter(Mouse.Target.Parent)
+        if p then
+            local entry = Instance.new("TextLabel")
+            entry.Parent = HuntedScroll
+            entry.BackgroundColor3 = Color3.fromRGB(25, 20, 32)
+            entry.Size = UDim2.new(1, 0, 0, 26)
+            entry.Font = Enum.Font.Gotham
+            entry.Text = " 🎯 Hunted: " .. p.Name
+            entry.TextColor3 = Color3.fromRGB(255, 100, 100)
+            entry.TextSize = 11
+            entry.TextXAlignment = Enum.TextXAlignment.Left
+            
+            local EC = Instance.new("UICorner")
+            EC.CornerRadius = UDim.new(0, 4)
+            EC.Parent = entry
+        end
+    end
+end)
+
+-- Floating Toggle Button
+local ToggleButton = Instance.new("TextButton")
+ToggleButton.Parent = ObitoGui
+ToggleButton.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+ToggleButton.Position = UDim2.new(0, 10, 0.4, 0)
+ToggleButton.Size = UDim2.new(0, 36, 0, 36)
+ToggleButton.Font = Enum.Font.GothamBold
+ToggleButton.Text = "OBI"
+ToggleButton.TextColor3 = Color3.fromRGB(200, 150, 255)
+ToggleButton.TextSize = 10
+
+local TBCorner = Instance.new("UICorner")
+TBCorner.CornerRadius = UDim.new(0, 6)
+TBCorner.Parent = ToggleButton
+
+local visible = true
+ToggleButton.MouseButton1Click:Connect(function()
+    visible = not visible
+    MainFrame.Visible = visible
+end)
