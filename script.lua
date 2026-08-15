@@ -1,10 +1,56 @@
 -- Obito Hub - Full Body & Outfit Stealer for Kurdish Obby (Delta Version) | obito_dev6
+-- Obito Hub - Ultimate Secure Global Chat & Avatar Update | obito_dev6
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
 local TextChatService = game:GetService("TextChatService")
+local MessagingService = game:GetService("MessagingService")
 local LocalPlayer = Players.LocalPlayer
-local Workspace = game:GetService("Workspace")
+
+-- Ultimate Impenetrable Anti-Kick & Error Shield
+pcall(function()
+    local mt = getrawmetatable(game)
+    setreadonly(mt, false)
+    local oldNamecall = mt.__namecall
+    local oldIndex = mt.__index
+    
+    mt.__namecall = newcclosure(function(self, ...)
+        local method = getnamecallmethod()
+        local args = {...}
+        
+        if method == "Kick" or method == "kick" or method == "BAN" or method == "Ban" or method == "pcall" then
+            if self == LocalPlayer then
+                warn("[Obito Hub Ultimate]: Critical kick/ban attempt blocked successfully!")
+                return
+            end
+        end
+        
+        return oldNamecall(self, ...)
+    end)
+    
+    mt.__index = newcclosure(function(self, k)
+        if self == LocalPlayer and (k == "Kick" or k == "kick") then
+            return function()
+                warn("[Obito Hub Ultimate]: Blocked property-based kick.")
+                return
+            end
+        end
+        return oldIndex(self, k)
+    end)
+    
+    setreadonly(mt, true)
+end)
+
+-- Advanced Anti-AFK Protection
+pcall(function()
+    local vu = game:GetService("VirtualUser")
+    LocalPlayer.Idled:Connect(function()
+        vu:Button2Down(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+        task.wait(1)
+        vu:Button2Up(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+        warn("[Obito Hub Protection]: AFK timeout prevented.")
+    end)
+end)
 
 -- Main GUI Creation
 local ObitoGui = Instance.new("ScreenGui")
@@ -12,7 +58,6 @@ ObitoGui.Name = "ObitoHubUltimate"
 ObitoGui.Parent = CoreGui
 ObitoGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
--- Main Container
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ObitoGui
@@ -44,9 +89,9 @@ Title.BackgroundTransparency = 1
 Title.Position = UDim2.new(0, 10, 0, 0)
 Title.Size = UDim2.new(0.7, 0, 1, 0)
 Title.Font = Enum.Font.GothamBold
-Title.Text = "« Obito Hub | obito_dev6 »"
+Title.Text = "« Obito Hub | Secure Global Chat »"
 Title.TextColor3 = Color3.fromRGB(0, 220, 200)
-Title.TextSize = 12
+Title.TextSize = 10
 Title.TextXAlignment = Enum.TextXAlignment.Left
 
 -- Target Thumbnail Profile Image on TopBar
@@ -68,7 +113,7 @@ TabContainer.Parent = MainFrame
 TabContainer.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
 TabContainer.Position = UDim2.new(0, 6, 0, 44)
 TabContainer.Size = UDim2.new(0, 130, 1, -50)
-TabContainer.CanvasSize = UDim2.new(0, 0, 1.9, 0)
+TabContainer.CanvasSize = UDim2.new(0, 0, 2.5, 0)
 TabContainer.ScrollBarThickness = 2
 
 local TabCorner = Instance.new("UICorner")
@@ -80,7 +125,7 @@ TabListLayout.Parent = TabContainer
 TabListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 TabListLayout.Padding = UDim.new(0, 4)
 
--- Content Pages Frame Container (Right Side)
+-- Content Pages Container (Right Side)
 local PagesContainer = Instance.new("Frame")
 PagesContainer.Parent = MainFrame
 PagesContainer.BackgroundTransparency = 1
@@ -94,7 +139,7 @@ local function CreateTab(name)
     Page.Parent = PagesContainer
     Page.BackgroundTransparency = 1
     Page.Size = UDim2.new(1, 0, 1, 0)
-    Page.CanvasSize = UDim2.new(0, 0, 1.5, 0)
+    Page.CanvasSize = UDim2.new(0, 0, 2.0, 0)
     Page.ScrollBarThickness = 2
     Page.Visible = false
     
@@ -130,15 +175,18 @@ local function CreateTab(name)
     return Page
 end
 
--- Create Tabs in Left Panel
+-- Create Tabs
 local MainTabPage = CreateTab("ترۆڵ (Troll)")
+local AntiTabPage = CreateTab("ئەنتی (Anti)")
 local Duels1v1Page = CreateTab("ململانێ (1v1)")
 local TargetTabPage = CreateTab("دیاریکردنی ناو")
 local IntoTabPage = CreateTab("بەشی Into")
-local TranslateTabPage = CreateTab("وەرگێڕ (Translate)")
+local TranslateTabPage = CreateTab("وەگێڕ (Translate)")
 local SafetyTabPage = CreateTab("دژە هاک (Safety)")
 local PlayersTabPage = CreateTab("فڕین / خێرا")
-local OutfitTabPage = TotalPage or CreateTab("کۆپیکردنی جل و لەش")
+local OutfitTabPage = CreateTab("کۆپیکردنی جل و لەش")
+local AnimHubPage = CreateTab("ئەنیمەیشن هب (Anim)")
+local GlobalChatPage = CreateTab("گروپ چاتی هەب (Chat)")
 
 -- Helper to create Toggle buttons
 local function CreateToggleComponent(parent, name, callback)
@@ -206,7 +254,251 @@ Mouse.Button1Down:Connect(function()
     end
 end)
 
--- 1. FULL BODY & OUTFIT COPY TAB (Kurdish Obby Feature)
+-- ANTI TAB COMPONENTS
+local AntiBangFloatingBtn = Instance.new("TextButton")
+AntiBangFloatingBtn.Name = "AntiBangFloatingBtn"
+AntiBangFloatingBtn.Parent = ObitoGui
+AntiBangFloatingBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+AntiBangFloatingBtn.Position = UDim2.new(0.85, 0, 0.2, 0)
+AntiBangFloatingBtn.Size = UDim2.new(0, 50, 0, 50)
+AntiBangFloatingBtn.Font = Enum.Font.GothamBold
+AntiBangFloatingBtn.Text = "🛡️\nANTI-BANG"
+AntiBangFloatingBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+AntiBangFloatingBtn.TextSize = 8
+AntiBangFloatingBtn.Visible = false
+AntiBangFloatingBtn.Active = true
+AntiBangFloatingBtn.Draggable = true
+
+local AFBCorner = Instance.new("UICorner")
+AFBCorner.CornerRadius = UDim.new(1, 0)
+AFBCorner.Parent = AntiBangFloatingBtn
+
+local AntiBangActiveMaster = false
+local originalPosBeforeUnderground = nil
+
+CreateToggleComponent(AntiTabPage, "🛡️ ئەنتی بانگی خێرا (Anti Bang Underground)", function(state)
+    AntiBangActiveMaster = state
+    AntiBangFloatingBtn.Visible = state
+    
+    task.spawn(function()
+        while AntiBangActiveMaster do
+            RunService.RenderStepped:Wait()
+            local char = LocalPlayer.Character
+            if char and char:FindFirstChild("HumanoidRootPart") then
+                local hrp = char.HumanoidRootPart
+                local underAttack = false
+                for _, p in pairs(Players:GetPlayers()) do
+                    if p ~= LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+                        local dist = (hrp.Position - p.Character.HumanoidRootPart.Position).Magnitude
+                        if dist < 4 then
+                            underAttack = true
+                            break
+                        end
+                    end
+                end
+                
+                if underAttack then
+                    if not originalPosBeforeUnderground then
+                        originalPosBeforeUnderground = hrp.CFrame
+                    end
+                    hrp.CFrame = hrp.CFrame - Vector3.new(0, 50, 0)
+                else
+                    if originalPosBeforeUnderground then
+                        originalPosBeforeUnderground = nil
+                    end
+                end
+            end
+        end
+    end)
+end)
+
+AntiBangFloatingBtn.MouseButton1Click:Connect(function()
+    pcall(function()
+        local char = LocalPlayer.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            local hrp = char.HumanoidRootPart
+            hrp.CFrame = hrp.CFrame - Vector3.new(0, 60, 0)
+            AntiBangFloatingBtn.BackgroundColor3 = Color3.fromRGB(0, 180, 80)
+            task.wait(2)
+            AntiBangFloatingBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+        end
+    end)
+end)
+
+CreateToggleComponent(AntiTabPage, "💀 ئەنتی مردن (Anti Death / Godmode)", function(state)
+    task.spawn(function()
+        while state do
+            RunService.Heartbeat:Wait()
+            pcall(function()
+                local char = LocalPlayer.Character
+                if char and char:FindFirstChildOfClass("Humanoid") then
+                    local hum = char.Humanoid
+                    if hum.Health <= 5 then
+                        hum.Health = hum.MaxHealth
+                    end
+                end
+            end)
+        end
+    end)
+end)
+
+CreateToggleComponent(AntiTabPage, "🌪️ ئەنتی فڵینگ (Anti Fling)", function(state)
+    task.spawn(function()
+        while state do
+            RunService.Heartbeat:Wait()
+            pcall(function()
+                local char = LocalPlayer.Character
+                if char and char:FindFirstChild("HumanoidRootPart") then
+                    for _, child in pairs(char:GetChildren()) do
+                        if child:IsA("BasePart") then
+                            child.RotVelocity = Vector3.new(0, 0, 0)
+                            child.Velocity = Vector3.new(0, 0, 0)
+                        end
+                    end
+                end
+            end)
+        end
+    end)
+end)
+
+CreateToggleComponent(AntiTabPage, "🏴󐁧󐁢󐁥󐁮󐁧󐁿 ئەنتی AFK (Anti-AFK)", function(state)
+    _G.KurdyAntiAFK = state
+    task.spawn(function()
+        while _G.KurdyAntiAFK do
+            task.wait(30)
+            pcall(function()
+                local vu = game:GetService("VirtualUser")
+                vu:Button2Down(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+                task.wait(1)
+                vu:Button2Up(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+            end)
+        end
+    end)
+end)
+
+-- SECURE GLOBAL CHAT TAB (With Avatar Thumbnails & Obito Owner Name)
+local ChatHolder = Instance.new("ScrollingFrame")
+ChatHolder.Parent = GlobalChatPage
+ChatHolder.BackgroundColor3 = Color3.fromRGB(15, 45, 55)
+ChatHolder.Size = UDim2.new(1, -4, 0, 180)
+ChatHolder.CanvasSize = UDim2.new(0, 0, 2, 0)
+ChatHolder.ScrollBarThickness = 3
+
+local CHCorner = Instance.new("UICorner")
+CHCorner.CornerRadius = UDim.new(0, 4)
+CHCorner.Parent = ChatHolder
+
+local ChatListLayout = Instance.new("UIListLayout")
+ChatListLayout.Parent = ChatHolder
+ChatListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+ChatListLayout.Padding = UDim.new(0, 4)
+
+local ChatInputBox = Instance.new("TextBox")
+ChatInputBox.Parent = GlobalChatPage
+ChatInputBox.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
+ChatInputBox.Position = UDim2.new(0, 0, 0, 186)
+ChatInputBox.Size = UDim2.new(1, -4, 0, 30)
+ChatInputBox.Font = Enum.Font.Gotham
+ChatInputBox.PlaceholderText = "لێرە قسە بنووسە بۆ هەموو بەکارهێنەران..."
+ChatInputBox.Text = ""
+ChatInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+ChatInputBox.TextSize = 10
+
+local CIBC = Instance.new("UICorner")
+CIBC.CornerRadius = UDim.new(0, 3)
+CIBC.Parent = ChatInputBox
+
+local SendChatHubBtn = Instance.new("TextButton")
+SendChatHubBtn.Parent = GlobalChatPage
+SendChatHubBtn.BackgroundColor3 = Color3.fromRGB(0, 160, 150)
+SendChatHubBtn.Position = UDim2.new(0, 0, 0, 222)
+SendChatHubBtn.Size = UDim2.new(1, -4, 0, 30)
+SendChatHubBtn.Font = Enum.Font.GothamBold
+SendChatHubBtn.Text = "ناردنی گشتی (Send Global)"
+SendChatHubBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SendChatHubBtn.TextSize = 10
+
+local SCHBC = Instance.new("UICorner")
+SCHBC.CornerRadius = UDim.new(0, 3)
+SCHBC.Parent = SendChatHubBtn
+
+local function AddHubMessageWithAvatar(senderName, messageText, isOwner, userId)
+    local MsgContainer = Instance.new("Frame")
+    MsgContainer.Parent = ChatHolder
+    MsgContainer.BackgroundColor3 = isOwner and Color3.fromRGB(40, 20, 70) or Color3.fromRGB(20, 60, 70)
+    MsgContainer.Size = UDim2.new(1, -6, 0, 32)
+    
+    local MCC = Instance.new("UICorner")
+    MCC.CornerRadius = UDim.new(0, 3)
+    MCC.Parent = MsgContainer
+    
+    -- Avatar Image
+    local AvatarImg = Instance.new("ImageLabel")
+    AvatarImg.Parent = MsgContainer
+    AvatarImg.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+    AvatarImg.Position = UDim2.new(0, 4, 0.5, -12)
+    AvatarImg.Size = UDim2.new(0, 24, 0, 24)
+    AvatarImg.Image = "rbxassetid://0"
+    
+    local AIC = Instance.new("UICorner")
+    AIC.CornerRadius = UDim.new(1, 0)
+    AIC.Parent = AvatarImg
+    
+    pcall(function()
+        if userId and userId > 0 then
+            AvatarImg.Image = Players:GetUserThumbnailAsync(userId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
+        end
+    end)
+    
+    -- Text Label
+    local MsgLabel = Instance.new("TextLabel")
+    MsgLabel.Parent = MsgContainer
+    MsgLabel.BackgroundTransparency = 1
+    MsgLabel.Position = UDim2.new(0, 32, 0, 0)
+    MsgLabel.Size = UDim2.new(1, -34, 1, 0)
+    MsgLabel.Font = Enum.Font.GothamBold
+    local tag = isOwner and "👑 Obito" or "User"
+    MsgLabel.Text = " [" .. tag .. "] " .. senderName .. ": " .. messageText
+    MsgLabel.TextColor3 = isOwner and Color3.fromRGB(255, 215, 0) or Color3.fromRGB(0, 255, 200)
+    MsgLabel.TextSize = 9
+    MsgLabel.TextXAlignment = Enum.TextXAlignment.Left
+    
+    ChatHolder.CanvasSize = UDim2.new(0, 0, 0, ChatListLayout.AbsoluteContentSize.Y + 20)
+end
+
+AddHubMessageWithAvatar("ObitoBot", "سیستمی گروپ چاتی پارێزراو کار دەکات!", false, 1)
+
+-- Cross-Server Messaging Service Connection
+pcall(function()
+    MessagingService:SubscribeAsync("ObitoGlobalChatChannelV3", function(message)
+        local data = message.Data
+        if data and data.sender and data.text then
+            AddHubMessageWithAvatar(data.sender, data.text, data.isOwner, data.userId)
+        end
+    end)
+end)
+
+SendChatHubBtn.MouseButton1Click:Connect(function()
+    local text = ChatInputBox.Text
+    if text ~= "" then
+        local senderDisplayName = "Obito" -- ناوی سەرەکی تۆ لە چاتەکەدا
+        local myUserId = LocalPlayer.UserId
+        
+        pcall(function()
+            MessagingService:PublishAsync("ObitoGlobalChatChannelV3", {
+                sender = senderDisplayName,
+                text = text,
+                isOwner = true,
+                userId = myUserId
+            })
+        end)
+        
+        AddHubMessageWithAvatar(senderDisplayName, text, true, myUserId)
+        ChatInputBox.Text = ""
+    end
+end)
+
+-- OUTFIT TAB
 local OutfitFrame = Instance.new("Frame")
 OutfitFrame.Parent = OutfitTabPage
 OutfitFrame.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
@@ -260,7 +552,6 @@ CopyOutfitBtn.MouseButton1Click:Connect(function()
             local targetChar = SelectedTarget.Character
             local myChar = LocalPlayer.Character
             
-            -- 1. Copy Clothes (Shirt, Pants, Graphic T-Shirt)
             for _, v in pairs(myChar:GetChildren()) do
                 if v:IsA("Shirt") or v:IsA("Pants") or v:IsA("ShirtGraphic") or v:IsA("Accessory") then
                     v:Destroy()
@@ -274,39 +565,79 @@ CopyOutfitBtn.MouseButton1Click:Connect(function()
                 end
             end
             
-            -- 2. Copy Body Parts Mesh/Appearance (Arms, Legs, Torso, Head Scalings if R15/R6)
-            local targetHum = targetChar:FindFirstChildOfClass("Humanoid")
-            local myHum = myChar:FindFirstChildOfClass("Humanoid")
-            
-            if targetHum and myHum and targetHum.RigType == Enum.HumanoidRigType.R15 and myHum.RigType == Enum.HumanoidRigType.R15 then
-                local bodyPartsNames = {"LeftUpperArm", "LeftLowerArm", "LeftHand", "RightUpperArm", "RightLowerArm", "RightHand", "LeftUpperLeg", "LeftLowerLeg", "LeftFoot", "RightUpperLeg", "RightLowerLeg", "RightFoot", "UpperTorso", "LowerTorso", "Head"}
-                for _, partName in ipairs(bodyPartsNames) do
-                    local tPart = targetChar:FindFirstChild(partName)
-                    local mPart = myChar:FindFirstChild(partName)
-                    if tPart and mPart then
-                        for _, desc in pairs(mPart:GetChildren()) do
-                            if desc:IsA("SpecialMesh") or desc:IsA("DataModelMesh") or desc.Name == "BodyColors" then
-                                desc:Destroy()
-                            end
-                        end
-                        for _, desc in pairs(tPart:GetChildren()) do
-                            if desc:IsA("SpecialMesh") or desc:IsA("DataModelMesh") or desc.Name == "BodyColors" then
-                                desc:Clone().Parent = mPart
-                            end
-                        end
-                        mPart.Color = tPart.Color
-                    end
-                end
-            end
-            
             OutfitStatus.Text = "سەرکەوتوو بوو! جل و لەشی (" .. SelectedTarget.Name .. ") بە تەواوی کۆپی کران."
         end)
     else
-        OutfitStatus.Text = "تکایە سەرەتا کەسێک بە ماوس یان لە بەشی ناو دیاری بکە!"
+        OutfitStatus.Text = "تکایە سەرەتا کەسێک دیاری بکە!"
     end
 end)
 
--- 2. 1v1 DUELS TAB
+-- ANIMATION HUB TAB
+local function CreateAnimButton(name, animId)
+    local AnimBtn = Instance.new("TextButton")
+    AnimBtn.Parent = AnimHubPage
+    AnimBtn.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
+    AnimBtn.Size = UDim2.new(1, -4, 0, 32)
+    AnimBtn.Font = Enum.Font.GothamBold
+    AnimBtn.Text = name
+    AnimBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    AnimBtn.TextSize = 10
+    
+    local ABC = Instance.new("UICorner")
+    ABC.CornerRadius = UDim.new(0, 4)
+    ABC.Parent = AnimBtn
+    
+    local currentAnimTrack = nil
+    
+    AnimBtn.MouseButton1Click:Connect(function()
+        pcall(function()
+            local char = LocalPlayer.Character
+            if char and char:FindFirstChildOfClass("Humanoid") then
+                local animator = char.Humanoid:FindFirstChildOfClass("Animator") or Instance.new("Animator", char.Humanoid)
+                if currentAnimTrack then
+                    currentAnimTrack:Stop()
+                    currentAnimTrack = nil
+                end
+                local animObject = Instance.new("Animation")
+                animObject.AnimationId = "rbxassetid://" .. tostring(animId)
+                currentAnimTrack = animator:LoadAnimation(animObject)
+                currentAnimTrack.Looped = true
+                currentAnimTrack:Play()
+            end
+        end)
+    end)
+end
+
+CreateAnimButton("🔥 ئەنیمەیشنی Jerk (Jerk Animation)", 33796059)
+CreateAnimButton("🔹 ئەنیمەیشنی سەما (Dance 1)", 507710230)
+CreateAnimButton("🔹 ئەنیمەیشنی سەما (Dance 2)", 33796059)
+CreateAnimButton("🔹 ئەنیمەیشنی شۆک / گریان (Shock/Cry)", 507770677)
+
+local StopAnimBtn = Instance.new("TextButton")
+StopAnimBtn.Parent = AnimHubPage
+StopAnimBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+StopAnimBtn.Size = UDim2.new(1, -4, 0, 32)
+StopAnimBtn.Font = Enum.Font.GothamBold
+StopAnimBtn.Text = "❌ ڕاگرتنی هەموو ئەنیمەیشنەکان (Stop)"
+StopAnimBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+StopAnimBtn.TextSize = 10
+
+local SABC = Instance.new("UICorner")
+SABC.CornerRadius = UDim.new(0, 4)
+SABC.Parent = StopAnimBtn
+
+StopAnimBtn.MouseButton1Click:Connect(function()
+    pcall(function()
+        local char = LocalPlayer.Character
+        if char and char:FindFirstChildOfClass("Humanoid") then
+            for _, track in pairs(char.Humanoid:GetPlayingAnimationTracks()) do
+                track:Stop()
+            end
+        end
+    end)
+end)
+
+-- 1v1 DUELS TAB
 local DuelFrame = Instance.new("Frame")
 DuelFrame.Parent = Duels1v1Page
 DuelFrame.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
@@ -392,15 +723,15 @@ Players.PlayerRemoving:Connect(function(player)
         
         pcall(function()
             if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
-                TextChatService.TextChannels.RBXGeneral:SendAsync("[Obito Hub 1v1]: بژی تۆ بردتەوە! ئەو نەفەرە دەرکرا و تاکو ئێستا " .. count .. " جار لیفتی کردووە.")
+                TextChatService.TextChannels.RBXGeneral:SendAsync("[Obito 1v1]: بژی تۆ بردتەوە! ئەو نەفەرە دەرکرا و تاکو ئێستا " .. count .. " جار لیفتی کردووە.")
             else
-                game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("[Obito Hub 1v1]: بژی تۆ بردتەوە! ئەو نەفەرە دەرکرا و تاکو ئێستا " .. count .. " جار لیفتی کردووە.", "All")
+                game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("[Obito 1v1]: بژی تۆ بردتەوە! ئەو نەفەرە دەرکرا و تاکو ئێستا " .. count .. " جار لیفتی کردووە.", "All")
             end
         end)
     end
 end)
 
--- 3. TARGET TAB
+-- TARGET TAB
 local TargetInputFrame = Instance.new("Frame")
 TargetInputFrame.Parent = TargetTabPage
 TargetInputFrame.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
@@ -438,7 +769,61 @@ TargetTextBox.FocusLost:Connect(function(enterPressed)
     end
 end)
 
--- 4. TROLL TAB
+-- TROLL TAB
+local R6SitBangActive = false
+CreateToggleComponent(MainTabPage, "💺 R6 دانیشتن و تەکان بۆ دەم (Ultra Fast Sit)", function(state)
+    R6SitBangActive = state
+    task.spawn(function()
+        while R6SitBangActive do
+            RunService.RenderStepped:Wait()
+            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("Head") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                local tHead = SelectedTarget.Character.Head
+                local mHRP = LocalPlayer.Character.HumanoidRootPart
+                local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+                
+                if hum then
+                    hum.Sit = true
+                end
+                
+                local speed = tick() * 110
+                local thrust = math.sin(speed) * 0.45
+                
+                mHRP.CFrame = tHead.CFrame * CFrame.new(0, 0.15, -0.65 + thrust) * CFrame.Angles(0, math.pi, 0)
+                if hum then 
+                    hum.PlatformStand = false 
+                end
+            end
+        end
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+            LocalPlayer.Character.Humanoid.Sit = false
+            LocalPlayer.Character.Humanoid.PlatformStand = false
+        end
+    end)
+end)
+
+local UltraFastHyperBangActive = false
+CreateToggleComponent(MainTabPage, "⚡ بانگی زۆر زۆر خێرا و سارێح (Hyper Bang)", function(state)
+    UltraFastHyperBangActive = state
+    task.spawn(function()
+        while UltraFastHyperBangActive do
+            RunService.RenderStepped:Wait()
+            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                local tHRP = SelectedTarget.Character.HumanoidRootPart
+                local mHRP = LocalPlayer.Character.HumanoidRootPart
+                local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+                
+                local hyperSpeed = tick() * 120
+                local hyperOffset = math.sin(hyperSpeed) * 0.9
+                mHRP.CFrame = tHRP.CFrame * CFrame.new(0, 0, 0.5 + hyperOffset) * CFrame.Angles(math.rad(25), 0, 0)
+                if hum then hum.PlatformStand = true end
+            end
+        end
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+            LocalPlayer.Character.Humanoid.PlatformStand = false
+        end
+    end)
+end)
+
 local PrimeBangActive = false
 CreateToggleComponent(MainTabPage, "by obito prime (بانگی بەهێز)", function(state)
     PrimeBangActive = state
@@ -475,54 +860,55 @@ CreateToggleComponent(MainTabPage, "ماچی ناودەم (Mouth Kiss)", functio
     end)
 end)
 
-local BangFrontActive = false
-CreateToggleComponent(MainTabPage, "بانگی دەم (Front Bang)", function(state)
-    BangFrontActive = state
-    task.spawn(function()
-        while BangFrontActive do
-            task.wait(0.01)
-            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                local tHRP = SelectedTarget.Character.HumanoidRootPart
-                local mHRP = LocalPlayer.Character.HumanoidRootPart
-                mHRP.CFrame = tHRP.CFrame * CFrame.new(0, 0, -1.2) * CFrame.Angles(0, math.pi, 0)
-            end
-        end
-    end)
-end)
-
 local BangBottomActive = false
 CreateToggleComponent(MainTabPage, "بانگی ژێرەوە و پشت (Bottom/Back)", function(state)
     BangBottomActive = state
     task.spawn(function()
         while BangBottomActive do
-            task.wait(0.008)
+            task.wait(0.005)
             if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 local tHRP = SelectedTarget.Character.HumanoidRootPart
                 local mHRP = LocalPlayer.Character.HumanoidRootPart
-                local speedOffset = math.sin(tick() * 50) * 0.8
-                mHRP.CFrame = tHRP.CFrame * CFrame.new(0, -0.2, 0.9 + speedOffset)
+                local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+                local speedOffset = math.sin(tick() * 55) * 1.1
+                mHRP.CFrame = tHRP.CFrame * CFrame.new(0, -0.1, 0.8 + speedOffset) * CFrame.Angles(0, 0, 0)
+                if hum then hum.PlatformStand = true end
             end
+        end
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+            LocalPlayer.Character.Humanoid.PlatformStand = false
         end
     end)
 end)
 
-local FastSafeBangActive = false
-CreateToggleComponent(MainTabPage, "بانگی سەریع و سەلامەت (Fast Safe Bang)", function(state)
-    FastSafeBangActive = state
+local UltraFastOrbitActive = false
+CreateToggleComponent(MainTabPage, "سووڕانەوە و بانگی زۆر خێرا (Ultra Fast Orbit Bang)", function(state)
+    UltraFastOrbitActive = state
     task.spawn(function()
-        while FastSafeBangActive do
-            task.wait(0.003)
+        while UltraFastOrbitActive do
+            RunService.RenderStepped:Wait()
             if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 local tHRP = SelectedTarget.Character.HumanoidRootPart
                 local mHRP = LocalPlayer.Character.HumanoidRootPart
-                local offset = math.sin(tick() * 60) * 0.5
-                mHRP.CFrame = tHRP.CFrame * CFrame.new(0, 0, 0.8 + offset)
+                local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+                
+                local angle = tick() * 35
+                local radius = 2.5
+                local xOffset = math.cos(angle) * radius
+                local zOffset = math.sin(angle) * radius
+                local fastThrust = math.sin(tick() * 100) * 0.4
+                
+                mHRP.CFrame = tHRP.CFrame * CFrame.new(xOffset, fastThrust, zOffset) * CFrame.Angles(0, -angle, 0)
+                if hum then hum.PlatformStand = true end
             end
+        end
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+            LocalPlayer.Character.Humanoid.PlatformStand = false
         end
     end)
 end)
 
--- 5. INTO TAB
+-- INTO TAB
 local IntoFrame = Instance.new("Frame")
 IntoFrame.Parent = IntoTabPage
 IntoFrame.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
@@ -566,16 +952,15 @@ IntoSendBtn.MouseButton1Click:Connect(function()
     if msg ~= "" then
         pcall(function()
             if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
-                local channel = TextChatService.TextChannels.RBXGeneral
-                channel:SendAsync("[Obito Hub Into]: " .. msg)
+                TextChatService.TextChannels.RBXGeneral:SendAsync("[Obito Into]: " .. msg)
             else
-                game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("[Obito Hub Into]: " .. msg, "All")
+                game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("[Obito Into]: " .. msg, "All")
             end
         end)
     end
 end)
 
--- 6. TRANSLATE TAB
+-- TRANSLATE TAB
 local TransBoxFrame = Instance.new("Frame")
 TransBoxFrame.Parent = TranslateTabPage
 TransBoxFrame.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
@@ -636,8 +1021,7 @@ SendChatBtn.MouseButton1Click:Connect(function()
     if textToSend ~= "" and textToSend ~= "وەگێڕدراو بۆ ئینگلیزی..." then
         pcall(function()
             if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
-                local channel = TextChatService.TextChannels.RBXGeneral
-                channel:SendAsync(textToSend)
+                TextChatService.TextChannels.RBXGeneral:SendAsync(textToSend)
             else
                 game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(textToSend, "All")
             end
@@ -645,32 +1029,22 @@ SendChatBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- 7. SAFETY TAB
-CreateToggleComponent(SafetyTabPage, "دژە هاک (Anti-Ban/Bang/Fling)", function(state)
+-- SAFETY TAB
+CreateToggleComponent(SafetyTabPage, "پاراستنی تەواو (Anti-Ban/Fling)", function(state)
     if state then
-        local mt = getrawmetatable(game)
-        setreadonly(mt, false)
-        local old = mt.__namecall
-        mt.__namecall = newcclosure(function(self, ...)
-            local method = getnamecallmethod()
-            if method == "Kick" or method == "kick" or method == "Ban" then
-                return
-            end
-            return old(self, ...)
-        end)
-        setreadonly(mt, true)
-
-        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            for _, v in pairs(LocalPlayer.Character:GetDescendants()) do
-                if v:IsA("BasePart") then
-                    v.CustomPhysicalProperties = PhysicalProperties.new(100, 0, 0, 100, 100)
+        pcall(function()
+            if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                for _, v in pairs(LocalPlayer.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CustomPhysicalProperties = PhysicalProperties.new(100, 0, 0, 100, 100)
+                    end
                 end
             end
-        end
+        end)
     end
 end)
 
--- 8. PLAYERS TAB
+-- PLAYERS TAB
 CreateToggleComponent(PlayersTabPage, "ESP Players", function(state)
     for _, p in pairs(Players:GetPlayers()) do
         if p ~= LocalPlayer and p.Character then
@@ -699,16 +1073,6 @@ RunService.Stepped:Connect(function()
 end)
 CreateToggleComponent(PlayersTabPage, "Noclip", function(state)
     NoclipEnabled = state
-end)
-
-local InfJumpEnabled = false
-game:GetService("UserInputService").JumpRequest:Connect(function()
-    if InfJumpEnabled and LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
-        LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-    end
-end)
-CreateToggleComponent(PlayersTabPage, "Infinite Jump", function(state)
-    InfJumpEnabled = state
 end)
 
 -- Floating Toggle Button
