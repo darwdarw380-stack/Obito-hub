@@ -1,6 +1,9 @@
 -- Obito Hub - Full Body & Outfit Stealer for Kurdish Obby (Delta Version) | obito_dev6
 -- Obito Hub - Ultimate Secure Global Chat & Avatar Update | obito_dev6
 -- Obito Hub - Ultimate Script with Global 24h Chat & Quick Song Player | obito_dev6
+-- Obito Hub - Full Body & Outfit Stealer for Kurdish Obby (Delta Version) | obito_dev6
+-- Obito Hub - Ultimate Secure Global Chat & Avatar Update | obito_dev6
+-- Obito Hub - Ultimate Script with Global 24h Chat & Quick Song Player | obito_dev6
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
@@ -1091,17 +1094,28 @@ StopAnimBtn.MouseButton1Click:Connect(function()
     end)
 end)
 
--- 1v1 DUELS TAB
-local DuelFrame = Instance.new("Frame")
-DuelFrame.Parent = Duels1v1Page
-DuelFrame.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
-DuelFrame.Size = UDim2.new(1, -4, 0, 160)
-local DFC = Instance.new("UICorner")
-DFC.CornerRadius = UDim.new(0, 4)
-DFC.Parent = DuelFrame
+-- 1v1 DUELS TAB (UPDATED WITH MULTI-TARGET HISTORY, AVATARS, & LEAVE TRACKER)
+local DuelMainScroll = Instance.new("ScrollingFrame")
+DuelMainScroll.Parent = Duels1v1Page
+DuelMainScroll.BackgroundTransparency = 1
+DuelMainScroll.Size = UDim2.new(1, 0, 1, 0)
+DuelMainScroll.CanvasSize = UDim2.new(0, 0, 3, 0)
+DuelMainScroll.ScrollBarThickness = 3
+
+local DMSLayout = Instance.new("UIListLayout")
+DMSLayout.Parent = DuelMainScroll
+DMSLayout.SortOrder = Enum.SortOrder.LayoutOrder
+DMSLayout.Padding = UDim.new(0, 8)
+
+-- Active Live Duel Box
+local ActiveDuelFrame = Instance.new("Frame")
+ActiveDuelFrame.Parent = DuelMainScroll
+ActiveDuelFrame.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
+ActiveDuelFrame.Size = UDim2.new(1, -4, 0, 175)
+local ADFC = Instance.new("UICorner") ADFC.CornerRadius = UDim.new(0, 4) ADFC.Parent = ActiveDuelFrame
 
 local MyAvatar = Instance.new("ImageLabel")
-MyAvatar.Parent = DuelFrame
+MyAvatar.Parent = ActiveDuelFrame
 MyAvatar.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
 MyAvatar.Position = UDim2.new(0, 15, 0, 32)
 MyAvatar.Size = UDim2.new(0, 45, 0, 45)
@@ -1109,32 +1123,97 @@ MyAvatar.Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.Thumbnai
 local MAC = Instance.new("UICorner") MAC.CornerRadius = UDim.new(1, 0) MAC.Parent = MyAvatar
 
 local VSText = Instance.new("TextLabel")
-VSText.Parent = DuelFrame VSText.BackgroundTransparency = 1 VSText.Position = UDim2.new(0.5, -25, 0, 42) VSText.Size = UDim2.new(0, 50, 0, 25)
+VSText.Parent = ActiveDuelFrame VSText.BackgroundTransparency = 1 VSText.Position = UDim2.new(0.5, -25, 0, 42) VSText.Size = UDim2.new(0, 50, 0, 25)
 VSText.Font = Enum.Font.GothamBold VSText.Text = "VS" VSText.TextColor3 = Color3.fromRGB(255, 100, 100) VSText.TextSize = 16
 
 local EnemyAvatar = Instance.new("ImageLabel")
-EnemyAvatar.Parent = DuelFrame EnemyAvatar.BackgroundColor3 = Color3.fromRGB(40, 40, 50) EnemyAvatar.Position = UDim2.new(1, -60, 0, 32) EnemyAvatar.Size = UDim2.new(0, 45, 0, 45) EnemyAvatar.Image = "rbxassetid://0"
+EnemyAvatar.Parent = ActiveDuelFrame EnemyAvatar.BackgroundColor3 = Color3.fromRGB(40, 40, 50) EnemyAvatar.Position = UDim2.new(1, -60, 0, 32) EnemyAvatar.Size = UDim2.new(0, 45, 0, 45) EnemyAvatar.Image = "rbxassetid://0"
 local EAC = Instance.new("UICorner") EAC.CornerRadius = UDim.new(1, 0) EAC.Parent = EnemyAvatar
 
 local DuelStatusLabel = Instance.new("TextLabel")
-DuelStatusLabel.Parent = DuelFrame DuelStatusLabel.BackgroundColor3 = Color3.fromRGB(15, 50, 60)
-DuelStatusLabel.Position = UDim2.new(0, 8, 0, 88) DuelStatusLabel.Size = UDim2.new(1, -16, 0, 60)
-DuelStatusLabel.Font = Enum.Font.Gotham DuelStatusLabel.Text = "کەسێك هەڵبژێرە بۆ دەستپێکردنی 1v1..."
+DuelStatusLabel.Parent = ActiveDuelFrame DuelStatusLabel.BackgroundColor3 = Color3.fromRGB(15, 50, 60)
+DuelStatusLabel.Position = UDim2.new(0, 8, 0, 88) DuelStatusLabel.Size = UDim2.new(1, -16, 0, 75)
+DuelStatusLabel.Font = Enum.Font.Gotham DuelStatusLabel.Text = "کەسێك دیاری بکە بۆ دەستپێکردنی ململانێ..."
 DuelStatusLabel.TextColor3 = Color3.fromRGB(255, 255, 255) DuelStatusLabel.TextSize = 10 DuelStatusLabel.TextWrapped = true
 local DSLC = Instance.new("UICorner") DSLC.CornerRadius = UDim.new(0, 4) DSLC.Parent = DuelStatusLabel
+
+-- History List Container
+local HistoryHeader = Instance.new("TextLabel")
+HistoryHeader.Parent = DuelMainScroll
+HistoryHeader.BackgroundTransparency = 1
+HistoryHeader.Size = UDim2.new(1, -4, 0, 25)
+HistoryHeader.Font = Enum.Font.GothamBold
+HistoryHeader.Text = "📜 مێژووی ململانێکان (History):"
+HistoryHeader.TextColor3 = Color3.fromRGB(255, 215, 0)
+HistoryHeader.TextSize = 11
+HistoryHeader.TextXAlignment = Enum.TextXAlignment.Left
+
+local HistoryContainer = Instance.new("Frame")
+HistoryContainer.Parent = DuelMainScroll
+HistoryContainer.BackgroundTransparency = 1
+HistoryContainer.Size = UDim2.new(1, -4, 0, 300)
+
+local HCLayout = Instance.new("UIListLayout")
+HCLayout.Parent = HistoryContainer
+HCLayout.SortOrder = Enum.SortOrder.LayoutOrder
+HCLayout.Padding = UDim.new(0, 5)
+
+local trackedEnemies = {}
+local activeLeaveConnection = nil
 
 RunService.Heartbeat:Connect(function()
     if SelectedTarget and SelectedTarget.Parent then
         EnemyAvatar.Image = Players:GetUserThumbnailAsync(SelectedTarget.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
-        DuelStatusLabel.Text = "ململانێ لەگەڵ: " .. SelectedTarget.Name
+        DuelStatusLabel.Text = "ململانێی ڕاستەقینە لەگەڵ: " .. SelectedTarget.Name
+        
+        if not trackedEnemies[SelectedTarget.UserId] then
+            trackedEnemies[SelectedTarget.UserId] = {
+                name = SelectedTarget.Name,
+                userId = SelectedTarget.UserId,
+                leftCount = 0,
+                status = "لە یارییەکەیە"
+            }
+            
+            if activeLeaveConnection then activeLeaveConnection:Disconnect() end
+            
+            local currentTargetRef = SelectedTarget
+            activeLeaveConnection = Players.PlayerRemoving:Connect(function(player)
+                if player == currentTargetRef then
+                    if trackedEnemies[player.UserId] then
+                        trackedEnemies[player.UserId].leftCount = trackedEnemies[player.UserId].leftCount + 1
+                        trackedEnemies[player.UserId].status = "یەک جار لیفتی کردوە ❌"
+                    end
+                    DuelStatusLabel.Text = "« " .. player.Name .. " لێفتی کرد! (یەک جار لیفتی کردوە) »"
+                    
+                    pcall(function()
+                        local HistoryItem = Instance.new("Frame")
+                        HistoryItem.Parent = HistoryContainer
+                        HistoryItem.BackgroundColor3 = Color3.fromRGB(18, 55, 65)
+                        HistoryItem.Size = UDim2.new(1, 0, 0, 35)
+                        local HIC = Instance.new("UICorner") HIC.CornerRadius = UDim.new(0, 3) HIC.Parent = HistoryItem
+                        
+                        local HistText = Instance.new("TextLabel")
+                        HistText.Parent = HistoryItem
+                        HistText.BackgroundTransparency = 1
+                        HistText.Position = UDim2.new(0, 8, 0, 0)
+                        HistText.Size = UDim2.new(1, -16, 1, 0)
+                        HistText.Font = Enum.Font.GothamBold
+                        HistText.Text = "👤 " .. player.Name .. " ➔ یەک جار لیفتی کردوە ❌"
+                        HistText.TextColor3 = Color3.fromRGB(255, 100, 100)
+                        HistText.TextSize = 9
+                        HistText.TextXAlignment = Enum.TextXAlignment.Left
+                        
+                        HistoryContainer.Size = UDim2.new(1, -4, 0, HCLayout.AbsoluteContentSize.Y + 40)
+                        DuelMainScroll.CanvasSize = UDim2.new(0, 0, 0, HCLayout.AbsoluteContentSize.Y + 220)
+                    end)
+                end
+            end)
+        end
     else
         EnemyAvatar.Image = "rbxassetid://0"
-    end
-end)
-
-Players.PlayerRemoving:Connect(function(player)
-    if player == SelectedTarget then
-        DuelStatusLabel.Text = "« بژی تۆ بردتەوە، ئەو دەرکرا! »"
+        if not SelectedTarget then
+            DuelStatusLabel.Text = "کەسێك هەڵبژێرە بۆ دەستپێکردنی ململانێ..."
+        end
     end
 end)
 
@@ -1404,4 +1483,3 @@ ToggleButton.MouseButton1Click:Connect(function()
     visible = not visible
     MainFrame.Visible = visible
 end)
-
