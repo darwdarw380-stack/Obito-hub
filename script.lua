@@ -4,12 +4,10 @@
 -- Obito Hub - Full Body & Outfit Stealer for Kurdish Obby (Delta Version) | obito_dev6
 -- Obito Hub - Ultimate Secure Global Chat & Avatar Update | obito_dev6
 -- Obito Hub - Ultimate Script with Global 24h Chat & Quick Song Player | obito_dev6
+-- Obito Hub - Ultimate Radio Hub & Secure Version (Updated with Speed Control) | obito_dev6
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
-local TextChatService = game:GetService("TextChatService")
-local MessagingService = game:GetService("MessagingService")
-local SoundService = game:GetService("SoundService")
 local LocalPlayer = Players.LocalPlayer
 
 -- Ultimate Impenetrable Anti-Kick & Error Shield
@@ -57,7 +55,7 @@ pcall(function()
     end)
 end)
 
--- Main GUI Creation (Secure in CoreGui)
+-- Main GUI Creation (Secure in CoreGui) - Black Glass Design
 local ObitoGui = Instance.new("ScreenGui")
 ObitoGui.Name = "ObitoHubGameScriptsSecure"
 ObitoGui.Parent = CoreGui
@@ -67,7 +65,8 @@ ObitoGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ObitoGui
-MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+MainFrame.BackgroundTransparency = 0.4
 MainFrame.BorderSizePixel = 0
 MainFrame.Position = UDim2.new(0.5, -200, 0.5, -220)
 MainFrame.Size = UDim2.new(0, 400, 0, 420)
@@ -78,11 +77,12 @@ local MainCorner = Instance.new("UICorner")
 MainCorner.CornerRadius = UDim.new(0, 6)
 MainCorner.Parent = MainFrame
 
--- Top Bar
+-- Top Bar - Beautiful Blue
 local TopBar = Instance.new("Frame")
 TopBar.Name = "TopBar"
 TopBar.Parent = MainFrame
-TopBar.BackgroundColor3 = Color3.fromRGB(20, 20, 26)
+TopBar.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+TopBar.BackgroundTransparency = 0.1
 TopBar.Size = UDim2.new(1, 0, 0, 36)
 
 local TopCorner = Instance.new("UICorner")
@@ -95,12 +95,12 @@ Title.BackgroundTransparency = 1
 Title.Position = UDim2.new(0, 40, 0, 0)
 Title.Size = UDim2.new(0.7, 0, 1, 0)
 Title.Font = Enum.Font.GothamBold
-Title.Text = "obito | سەرۆک owner"
-Title.TextColor3 = Color3.fromRGB(255, 215, 0)
-Title.TextSize = 11
+Title.Text = "obito | سەرۆک owner (Protected)"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 10
 Title.TextXAlignment = Enum.TextXAlignment.Left
 
--- Beautiful Built-in Gradient Logo
+-- Beautiful Built-in Gradient Logo (Blue Theme)
 local CustomLogoBadge = Instance.new("Frame")
 CustomLogoBadge.Name = "CustomLogoBadge"
 CustomLogoBadge.Parent = TopBar
@@ -114,9 +114,9 @@ BadgeCorner.Parent = CustomLogoBadge
 
 local BadgeGrad = Instance.new("UIGradient")
 BadgeGrad.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0.0, Color3.fromRGB(255, 100, 0)),
-    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 215, 0)),
-    ColorSequenceKeypoint.new(1.0, Color3.fromRGB(0, 200, 150))
+    ColorSequenceKeypoint.new(0.0, Color3.fromRGB(0, 180, 255)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0, 120, 255)),
+    ColorSequenceKeypoint.new(1.0, Color3.fromRGB(0, 80, 200))
 }
 BadgeGrad.Parent = CustomLogoBadge
 
@@ -126,7 +126,7 @@ BadgeText.BackgroundTransparency = 1
 BadgeText.Size = UDim2.new(1, 0, 1, 0)
 BadgeText.Font = Enum.Font.GothamBold
 BadgeText.Text = "O"
-BadgeText.TextColor3 = Color3.fromRGB(15, 15, 20)
+BadgeText.TextColor3 = Color3.fromRGB(255, 255, 255)
 BadgeText.TextSize = 13
 
 -- Target Thumbnail Profile Image on TopBar
@@ -134,6 +134,7 @@ local TargetImage = Instance.new("ImageLabel")
 TargetImage.Name = "TargetImage"
 TargetImage.Parent = TopBar
 TargetImage.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+TargetImage.BackgroundTransparency = 0.5
 TargetImage.Position = UDim2.new(1, -34, 0.5, -12)
 TargetImage.Size = UDim2.new(0, 24, 0, 24)
 TargetImage.Image = "rbxassetid://0"
@@ -142,10 +143,11 @@ local ImgCorner = Instance.new("UICorner")
 ImgCorner.CornerRadius = UDim.new(1, 0)
 ImgCorner.Parent = TargetImage
 
--- Left Side Tab Holder
+-- Left Side Tab Holder (Glass effect)
 local TabContainer = Instance.new("ScrollingFrame")
 TabContainer.Parent = MainFrame
-TabContainer.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
+TabContainer.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+TabContainer.BackgroundTransparency = 0.6
 TabContainer.Position = UDim2.new(0, 6, 0, 44)
 TabContainer.Size = UDim2.new(0, 130, 1, -50)
 TabContainer.CanvasSize = UDim2.new(0, 0, 4.8, 0)
@@ -174,7 +176,7 @@ local function CreateTab(name)
     Page.Parent = PagesContainer
     Page.BackgroundTransparency = 1
     Page.Size = UDim2.new(1, 0, 1, 0)
-    Page.CanvasSize = UDim2.new(0, 0, 2.8, 0)
+    Page.CanvasSize = UDim2.new(0, 0, 5.5, 0)
     Page.ScrollBarThickness = 2
     Page.Visible = false
     
@@ -185,7 +187,8 @@ local function CreateTab(name)
     
     local TabBtn = Instance.new("TextButton")
     TabBtn.Parent = TabContainer
-    TabBtn.BackgroundColor3 = Color3.fromRGB(24, 75, 85)
+    TabBtn.BackgroundColor3 = Color3.fromRGB(0, 90, 180)
+    TabBtn.BackgroundTransparency = 0.3
     TabBtn.Size = UDim2.new(1, -4, 0, 28)
     TabBtn.Font = Enum.Font.GothamBold
     TabBtn.Text = name
@@ -201,37 +204,40 @@ local function CreateTab(name)
             if p:IsA("ScrollingFrame") then p.Visible = false end
         end
         for _, b in pairs(TabContainer:GetChildren()) do
-            if b:IsA("TextButton") then b.BackgroundColor3 = Color3.fromRGB(24, 75, 85) end
+            if b:IsA("TextButton") then 
+                b.BackgroundColor3 = Color3.fromRGB(0, 90, 180) 
+                b.BackgroundTransparency = 0.3
+            end
         end
         Page.Visible = true
-        TabBtn.BackgroundColor3 = Color3.fromRGB(0, 160, 150)
+        TabBtn.BackgroundColor3 = Color3.fromRGB(0, 140, 255)
+        TabBtn.BackgroundTransparency = 0.1
     end)
     
     return Page
 end
 
--- Create Tabs
+-- Create Remaining Tabs
 local LagServerPage = CreateTab("رین لاگەر (Rain Lagger)")
 local MainTabPage = CreateTab("ترۆڵ (Troll)")
 local AntiTabPage = CreateTab("ئەنتی (Anti)")
-local Duels1v1Page = CreateTab("ململانێ (1v1)")
+local Duels1v1Page = CreateTab("سەر بڕاوەکان")
 local TargetTabPage = CreateTab("دیاریکردنی ناو")
 local TranslateTabPage = CreateTab("وەگێڕ (Translate)")
 local GameScriptsPage = CreateTab("سکریپتی یاریەکان")
-local SongPlayerPage = CreateTab("🎵 لێدەری گۆرانی (Song)")
 local SafetyTabPage = CreateTab("دژە هاک (Safety)")
 local PlayersTabPage = CreateTab("فڕین / خێرا")
 local OutfitTabPage = CreateTab("کۆپیکردنی جل و لەش")
 local CopyDancePage = CreateTab("کۆپی دەنس (Dance)")
-local AnimHubPage = CreateTab("ئەنیمەیشن هب (Anim)")
-local GlobalChatPage = CreateTab("چاتی تیکتۆک (Chat)")
+local RadioHubPage = CreateTab("رادیۆ (Radio)")
 local GeminiChatPage = CreateTab("چات جەمینی (Gemini)")
 
 -- Helper to create Toggle buttons
 local function CreateToggleComponent(parent, name, callback)
     local Frame = Instance.new("Frame")
     Frame.Parent = parent
-    Frame.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
+    Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+    Frame.BackgroundTransparency = 0.5
     Frame.Size = UDim2.new(1, -4, 0, 32)
     
     local FCorner = Instance.new("UICorner")
@@ -281,7 +287,6 @@ end
 local SelectedTarget = nil
 local Mouse = LocalPlayer:GetMouse()
 
--- Click to Select Target
 Mouse.Button1Down:Connect(function()
     if Mouse.Target and Mouse.Target.Parent:FindFirstChild("Humanoid") then
         local foundPlayer = Players:GetPlayerFromCharacter(Mouse.Target.Parent)
@@ -291,6 +296,273 @@ Mouse.Button1Down:Connect(function()
         end
     end
 end)
+
+-- RADIO HUB TAB (Interactive Radio with 15 Codes & Speed 0.1x to 1x+)
+local CurrentRadioSound = nil
+local CurrentRadioVolume = 5
+local CurrentRadioSpeed = 1.0
+
+local RadioMainFrame = Instance.new("Frame")
+RadioMainFrame.Parent = RadioHubPage
+RadioMainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+RadioMainFrame.BackgroundTransparency = 0.5
+RadioMainFrame.Size = UDim2.new(1, -4, 0, 150)
+
+local RMFC = Instance.new("UICorner")
+RMFC.CornerRadius = UDim.new(0, 4)
+RMFC.Parent = RadioMainFrame
+
+local RadioStatusLabel = Instance.new("TextLabel")
+RadioStatusLabel.Parent = RadioMainFrame
+RadioStatusLabel.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
+RadioStatusLabel.Position = UDim2.new(0, 6, 0, 8)
+RadioStatusLabel.Size = UDim2.new(1, -12, 0, 32)
+RadioStatusLabel.Font = Enum.Font.GothamBold
+RadioStatusLabel.Text = "📻 ڕادیۆ ئامادەیە (خێرایی: 1.0x)"
+RadioStatusLabel.TextColor3 = Color3.fromRGB(0, 200, 255)
+RadioStatusLabel.TextSize = 9
+RadioStatusLabel.TextWrapped = true
+
+local RSLC = Instance.new("UICorner")
+RSLC.CornerRadius = UDim.new(0, 3)
+RSLC.Parent = RadioStatusLabel
+
+-- Controls: Stop, Vol Down, Vol Up
+local StopRadioBtn = Instance.new("TextButton")
+StopRadioBtn.Parent = RadioMainFrame
+StopRadioBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+StopRadioBtn.Position = UDim2.new(0, 6, 0, 44)
+StopRadioBtn.Size = UDim2.new(0.32, -4, 0, 26)
+StopRadioBtn.Font = Enum.Font.GothamBold
+StopRadioBtn.Text = "⏹ وەستان (Stop)"
+StopRadioBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+StopRadioBtn.TextSize = 9
+local SRBC = Instance.new("UICorner") SRBC.CornerRadius = UDim.new(0, 3) SRBC.Parent = StopRadioBtn
+
+local VolDownBtn = Instance.new("TextButton")
+VolDownBtn.Parent = RadioMainFrame
+VolDownBtn.BackgroundColor3 = Color3.fromRGB(0, 90, 180)
+VolDownBtn.Position = UDim2.new(0.34, 0, 0, 44)
+VolDownBtn.Size = UDim2.new(0.32, -4, 0, 26)
+VolDownBtn.Font = Enum.Font.GothamBold
+VolDownBtn.Text = "🔉 کزی دەنگ"
+VolDownBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+VolDownBtn.TextSize = 9
+local VDBC = Instance.new("UICorner") VDBC.CornerRadius = UDim.new(0, 3) VDBC.Parent = VolDownBtn
+
+local VolUpBtn = Instance.new("TextButton")
+VolUpBtn.Parent = RadioMainFrame
+VolUpBtn.BackgroundColor3 = Color3.fromRGB(0, 140, 255)
+VolUpBtn.Position = UDim2.new(0.68, 0, 0, 44)
+VolUpBtn.Size = UDim2.new(0.32, -4, 0, 26)
+VolUpBtn.Font = Enum.Font.GothamBold
+VolUpBtn.Text = "🔊 زۆری دەنگ"
+VolUpBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+VolUpBtn.TextSize = 9
+local VUBC = Instance.new("UICorner") VUBC.CornerRadius = UDim.new(0, 3) VUBC.Parent = VolUpBtn
+
+-- Speed Controls: Slow Down (0.1x), Speed Up, Reset (1x)
+local SpeedSlowBtn = Instance.new("TextButton")
+SpeedSlowBtn.Parent = RadioMainFrame
+SpeedSlowBtn.BackgroundColor3 = Color3.fromRGB(150, 80, 0)
+SpeedSlowBtn.Position = UDim2.new(0, 6, 0, 74)
+SpeedSlowBtn.Size = UDim2.new(0.32, -4, 0, 26)
+SpeedSlowBtn.Font = Enum.Font.GothamBold
+SpeedSlowBtn.Text = "🐢 خاوکردنەوە (-)"
+SpeedSlowBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SpeedSlowBtn.TextSize = 9
+local SSBC = Instance.new("UICorner") SSBC.CornerRadius = UDim.new(0, 3) SSBC.Parent = SpeedSlowBtn
+
+local SpeedResetBtn = Instance.new("TextButton")
+SpeedResetBtn.Parent = RadioMainFrame
+SpeedResetBtn.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
+SpeedResetBtn.Position = UDim2.new(0.34, 0, 0, 74)
+SpeedResetBtn.Size = UDim2.new(0.32, -4, 0, 26)
+SpeedResetBtn.Font = Enum.Font.GothamBold
+SpeedResetBtn.Text = "⚡ ئاسایی (1.0x)"
+SpeedResetBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SpeedResetBtn.TextSize = 9
+local SRRBC = Instance.new("UICorner") SRRBC.CornerRadius = UDim.new(0, 3) SRRBC.Parent = SpeedResetBtn
+
+local SpeedFastBtn = Instance.new("TextButton")
+SpeedFastBtn.Parent = RadioMainFrame
+SpeedFastBtn.BackgroundColor3 = Color3.fromRGB(0, 150, 100)
+SpeedFastBtn.Position = UDim2.new(0.68, 0, 0, 74)
+SpeedFastBtn.Size = UDim2.new(0.32, -4, 0, 26)
+SpeedFastBtn.Font = Enum.Font.GothamBold
+SpeedFastBtn.Text = "🚀 خێراکردن (+)"
+SpeedFastBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SpeedFastBtn.TextSize = 9
+local SFBC = Instance.new("UICorner") SFBC.CornerRadius = UDim.new(0, 3) SFBC.Parent = SpeedFastBtn
+
+-- Custom Song ID Input Box & Play Button
+local CustomIDBox = Instance.new("TextBox")
+CustomIDBox.Parent = RadioMainFrame
+CustomIDBox.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
+CustomIDBox.Position = UDim2.new(0, 6, 0, 106)
+CustomIDBox.Size = UDim2.new(0.65, -4, 0, 32)
+CustomIDBox.Font = Enum.Font.Gotham
+CustomIDBox.PlaceholderText = "کۆدی گۆرانی بنووسە..."
+CustomIDBox.Text = ""
+CustomIDBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+CustomIDBox.TextSize = 9
+local CIDC = Instance.new("UICorner") CIDC.CornerRadius = UDim.new(0, 3) CIDC.Parent = CustomIDBox
+
+local PlayCustomBtn = Instance.new("TextButton")
+PlayCustomBtn.Parent = RadioMainFrame
+PlayCustomBtn.BackgroundColor3 = Color3.fromRGB(0, 180, 80)
+PlayCustomBtn.Position = UDim2.new(0.67, 0, 0, 106)
+PlayCustomBtn.Size = UDim2.new(0.33, -4, 0, 32)
+PlayCustomBtn.Font = Enum.Font.GothamBold
+PlayCustomBtn.Text = "▶ لێدان"
+PlayCustomBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+PlayCustomBtn.TextSize = 9
+local PCBC = Instance.new("UICorner") PCBC.CornerRadius = UDim.new(0, 3) PCBC.Parent = PlayCustomBtn
+
+local function PlaySongById(songId)
+    pcall(function()
+        local char = LocalPlayer.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            if CurrentRadioSound then
+                CurrentRadioSound:Destroy()
+            end
+            local sound = Instance.new("Sound")
+            sound.Name = "ObitoHubRadioSound"
+            sound.SoundId = "rbxassetid://" .. tostring(songId)
+            sound.Volume = CurrentRadioVolume
+            sound.PlaybackSpeed = CurrentRadioSpeed
+            sound.Looped = true
+            sound.Parent = char.HumanoidRootPart
+            sound:Play()
+            CurrentRadioSound = sound
+            RadioStatusLabel.Text = "▶ لێدەدات: " .. tostring(songId) .. " (خێرایی: " .. string.format("%.1f", CurrentRadioSpeed) .. "x)"
+        end
+    end)
+end
+
+StopRadioBtn.MouseButton1Click:Connect(function()
+    pcall(function()
+        if CurrentRadioSound then
+            CurrentRadioSound:Stop()
+            CurrentRadioSound:Destroy()
+            CurrentRadioSound = nil
+        end
+        RadioStatusLabel.Text = "⏹ ڕادیۆ وەستا."
+    end)
+end)
+
+VolDownBtn.MouseButton1Click:Connect(function()
+    CurrentRadioVolume = math.max(1, CurrentRadioVolume - 2)
+    if CurrentRadioSound then CurrentRadioSound.Volume = CurrentRadioVolume end
+    RadioStatusLabel.Text = "🔉 ئاستی دەنگ کزکرا: " .. tostring(CurrentRadioVolume)
+end)
+
+VolUpBtn.MouseButton1Click:Connect(function()
+    CurrentRadioVolume = math.min(10, CurrentRadioVolume + 2)
+    if CurrentRadioSound then CurrentRadioSound.Volume = CurrentRadioVolume end
+    RadioStatusLabel.Text = "🔊 ئاستی دەنگ بەرزکرایەوە: " .. tostring(CurrentRadioVolume)
+end)
+
+SpeedSlowBtn.MouseButton1Click:Connect(function()
+    CurrentRadioSpeed = math.max(0.1, CurrentRadioSpeed - 0.1)
+    if CurrentRadioSound then CurrentRadioSound.PlaybackSpeed = CurrentRadioSpeed end
+    RadioStatusLabel.Text = "🐢 خێرایی کزکرا/خاوکرایەوە: " .. string.format("%.1f", CurrentRadioSpeed) .. "x"
+end)
+
+SpeedResetBtn.MouseButton1Click:Connect(function()
+    CurrentRadioSpeed = 1.0
+    if CurrentRadioSound then CurrentRadioSound.PlaybackSpeed = CurrentRadioSpeed end
+    RadioStatusLabel.Text = "⚡ خێرایی گەڕایەوە بۆ باری ئاسایی (1.0x)"
+end)
+
+SpeedFastBtn.MouseButton1Click:Connect(function()
+    CurrentRadioSpeed = math.min(3.0, CurrentRadioSpeed + 0.1)
+    if CurrentRadioSound then CurrentRadioSound.PlaybackSpeed = CurrentRadioSpeed end
+    RadioStatusLabel.Text = "🚀 خێرایی بەرزکرایەوە: " .. string.format("%.1f", CurrentRadioSpeed) .. "x"
+end)
+
+PlayCustomBtn.MouseButton1Click:Connect(function()
+    local idText = CustomIDBox.Text
+    if idText ~= "" then
+        PlaySongById(idText)
+    end
+end)
+
+-- Total 15 Song Codes
+local SongCodesList = {
+    "107145145396784",
+    "12010813191786",
+    "122268584750241",
+    "109627753619575",
+    "107094208500223",
+    "85125256349722",
+    "94281718874647",
+    "7587768146924",
+    "94192604825607",
+    "125231666176519",
+    "128146983730820",
+    "120276495263250",
+    "83389137516721",
+    "140608066326568",
+    "127621033784944"
+}
+
+for i, code in ipairs(SongCodesList) do
+    local SongItemFrame = Instance.new("Frame")
+    SongItemFrame.Parent = RadioHubPage
+    SongItemFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+    SongItemFrame.BackgroundTransparency = 0.5
+    SongItemFrame.Size = UDim2.new(1, -4, 0, 36)
+    
+    local SIFC = Instance.new("UICorner")
+    SIFC.CornerRadius = UDim.new(0, 4)
+    SIFC.Parent = SongItemFrame
+    
+    local CodeLabel = Instance.new("TextLabel")
+    CodeLabel.Parent = SongItemFrame
+    CodeLabel.BackgroundTransparency = 1
+    CodeLabel.Position = UDim2.new(0, 6, 0, 0)
+    CodeLabel.Size = UDim2.new(0.5, 0, 1, 0)
+    CodeLabel.Font = Enum.Font.GothamBold
+    CodeLabel.Text = "🎵 گۆرانی " .. i .. " (" .. code .. ")"
+    CodeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    CodeLabel.TextSize = 8
+    CodeLabel.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local CopyBtn = Instance.new("TextButton")
+    CopyBtn.Parent = SongItemFrame
+    CopyBtn.BackgroundColor3 = Color3.fromRGB(0, 90, 180)
+    CopyBtn.Position = UDim2.new(0.52, 0, 0.5, -12)
+    CopyBtn.Size = UDim2.new(0.22, 0, 0, 24)
+    CopyBtn.Font = Enum.Font.GothamBold
+    CopyBtn.Text = "کۆپی"
+    CopyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    CopyBtn.TextSize = 8
+    local CBC = Instance.new("UICorner") CBC.CornerRadius = UDim.new(0, 3) CBC.Parent = CopyBtn
+    
+    local PlayBtn = Instance.new("TextButton")
+    PlayBtn.Parent = SongItemFrame
+    PlayBtn.BackgroundColor3 = Color3.fromRGB(0, 180, 80)
+    PlayBtn.Position = UDim2.new(0.76, 0, 0.5, -12)
+    PlayBtn.Size = UDim2.new(0.22, 0, 0, 24)
+    PlayBtn.Font = Enum.Font.GothamBold
+    PlayBtn.Text = "لێدان"
+    PlayBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    PlayBtn.TextSize = 8
+    local PBC = Instance.new("UICorner") PBC.CornerRadius = UDim.new(0, 3) PBC.Parent = PlayBtn
+    
+    CopyBtn.MouseButton1Click:Connect(function()
+        pcall(function() setclipboard(code) end)
+        CodeLabel.Text = "✔ کۆپی کرا!"
+        task.delay(1.5, function()
+            CodeLabel.Text = "🎵 گۆرانی " .. i .. " (" .. code .. ")"
+        end)
+    end)
+    
+    PlayBtn.MouseButton1Click:Connect(function()
+        PlaySongById(code)
+    end)
+end
 
 -- KURDISH OBBY RAIN LAGGER ENGINE
 local RainLaggerFloatingBtn = Instance.new("TextButton")
@@ -361,129 +633,6 @@ task.spawn(function()
             end)
         end
     end
-end)
-
--- SONG PLAYER (LOCAL AUDIO CODE SYSTEM WITH QUICK COPY)
-local ActiveCustomSong = nil
-
-local SongFrame = Instance.new("Frame")
-SongFrame.Parent = SongPlayerPage
-SongFrame.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
-SongFrame.Size = UDim2.new(1, -4, 0, 215)
-
-local SFC = Instance.new("UICorner")
-SFC.CornerRadius = UDim.new(0, 4)
-SFC.Parent = SongFrame
-
-local SongInputBox = Instance.new("TextBox")
-SongInputBox.Parent = SongFrame
-SongInputBox.BackgroundColor3 = Color3.fromRGB(15, 50, 60)
-SongInputBox.Position = UDim2.new(0, 6, 0, 10)
-SongInputBox.Size = UDim2.new(1, -12, 0, 32)
-SongInputBox.Font = Enum.Font.Gotham
-SongInputBox.PlaceholderText = "کۆدی گۆرانی (Audio ID) لێرە بنووسە..."
-SongInputBox.Text = "107145145396784"
-SongInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-SongInputBox.TextSize = 10
-
-local SIBC = Instance.new("UICorner")
-SIBC.CornerRadius = UDim.new(0, 3)
-SIBC.Parent = SongInputBox
-
-local CopySongCodeBtn = Instance.new("TextButton")
-CopySongCodeBtn.Parent = SongFrame
-CopySongCodeBtn.BackgroundColor3 = Color3.fromRGB(0, 140, 180)
-CopySongCodeBtn.Position = UDim2.new(0, 6, 0, 50)
-CopySongCodeBtn.Size = UDim2.new(1, -12, 0, 30)
-CopySongCodeBtn.Font = Enum.Font.GothamBold
-CopySongCodeBtn.Text = "📋 کۆپیکردنی کۆدی گۆرانی بە 1 کلیک"
-CopySongCodeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-CopySongCodeBtn.TextSize = 10
-
-local CSCBC = Instance.new("UICorner")
-CSCBC.CornerRadius = UDim.new(0, 3)
-CSCBC.Parent = CopySongCodeBtn
-
-CopySongCodeBtn.MouseButton1Click:Connect(function()
-    pcall(function()
-        setclipboard(SongInputBox.Text)
-        CopySongCodeBtn.Text = "✔ کۆدەکە کۆپی کرا!"
-        task.wait(1.5)
-        CopySongCodeBtn.Text = "📋 کۆپیکردنی کۆدی گۆرانی بە 1 کلیک"
-    end)
-end)
-
-local PlaySongBtn = Instance.new("TextButton")
-PlaySongBtn.Parent = SongFrame
-PlaySongBtn.BackgroundColor3 = Color3.fromRGB(0, 180, 100)
-PlaySongBtn.Position = UDim2.new(0, 6, 0, 86)
-PlaySongBtn.Size = UDim2.new(0.48, -4, 0, 35)
-PlaySongBtn.Font = Enum.Font.GothamBold
-PlaySongBtn.Text = "لێدانی گۆرانی (Play)"
-PlaySongBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-PlaySongBtn.TextSize = 10
-
-local PSBC = Instance.new("UICorner")
-PSBC.CornerRadius = UDim.new(0, 3)
-PSBC.Parent = PlaySongBtn
-
-local StopSongBtn = Instance.new("TextButton")
-StopSongBtn.Parent = SongFrame
-StopSongBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
-StopSongBtn.Position = UDim2.new(0.52, 2, 0, 86)
-StopSongBtn.Size = UDim2.new(0.48, -4, 0, 35)
-StopSongBtn.Font = Enum.Font.GothamBold
-StopSongBtn.Text = "وەستاندن (Stop)"
-StopSongBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-StopSongBtn.TextSize = 10
-
-local SSBC = Instance.new("UICorner")
-SSBC.CornerRadius = UDim.new(0, 3)
-SSBC.Parent = StopSongBtn
-
-local SongStatusLabel = Instance.new("TextLabel")
-SongStatusLabel.Parent = SongFrame
-SongStatusLabel.BackgroundColor3 = Color3.fromRGB(15, 50, 60)
-SongStatusLabel.Position = UDim2.new(0, 6, 0, 128)
-SongStatusLabel.Size = UDim2.new(1, -12, 0, 75)
-SongStatusLabel.Font = Enum.Font.GothamBold
-SongStatusLabel.Text = "بارودۆخ: هیچ گۆرانییەک کار ناکات (بەس لای خۆت دەبیسترێت)"
-SongStatusLabel.TextColor3 = Color3.fromRGB(255, 215, 0)
-SongStatusLabel.TextSize = 9
-SongStatusLabel.TextWrapped = true
-
-local SSLC = Instance.new("UICorner")
-SSLC.CornerRadius = UDim.new(0, 3)
-SSLC.Parent = SongStatusLabel
-
-PlaySongBtn.MouseButton1Click:Connect(function()
-    local codeText = SongInputBox.Text
-    local audioId = tonumber(codeText)
-    if audioId then
-        pcall(function()
-            if ActiveCustomSong then ActiveCustomSong:Destroy() end
-            ActiveCustomSong = Instance.new("Sound")
-            ActiveCustomSong.SoundId = "rbxassetid://" .. tostring(audioId)
-            ActiveCustomSong.Volume = 2
-            ActiveCustomSong.Looped = true
-            ActiveCustomSong.Parent = SoundService
-            ActiveCustomSong:Play()
-            SongStatusLabel.Text = "گۆرانی بە سەرکەوتوویی لێدەدرێت (ID: " .. audioId .. ")"
-        end)
-    else
-        SongStatusLabel.Text = "تکایە کۆدێکی دروستی ژمارەیی بنووسە!"
-    end
-end)
-
-StopSongBtn.MouseButton1Click:Connect(function()
-    pcall(function()
-        if ActiveCustomSong then
-            ActiveCustomSong:Stop()
-            ActiveCustomSong:Destroy()
-            ActiveCustomSong = nil
-        end
-        SongStatusLabel.Text = "گۆرانی ڕگیرا."
-    end)
 end)
 
 -- ANTI TAB COMPONENTS
@@ -598,14 +747,13 @@ end)
 -- GAME SCRIPTS TAB
 local GameScriptsHolder = Instance.new("ScrollingFrame")
 GameScriptsHolder.Parent = GameScriptsPage
-GameScriptsHolder.BackgroundColor3 = Color3.fromRGB(12, 35, 45)
+GameScriptsHolder.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
+GameScriptsHolder.BackgroundTransparency = 0.5
 GameScriptsHolder.Size = UDim2.new(1, -4, 0, 180)
 GameScriptsHolder.CanvasSize = UDim2.new(0, 0, 2, 0)
 GameScriptsHolder.ScrollBarThickness = 3
 
-local GSHC = Instance.new("UICorner")
-GSHC.CornerRadius = UDim.new(0, 4)
-GSHC.Parent = GameScriptsHolder
+local GSHC = Instance.new("UICorner") GSHC.CornerRadius = UDim.new(0, 4) GSHC.Parent = GameScriptsHolder
 
 local GameScriptsListLayout = Instance.new("UIListLayout")
 GameScriptsListLayout.Parent = GameScriptsHolder
@@ -614,7 +762,8 @@ GameScriptsListLayout.Padding = UDim.new(0, 4)
 
 local GameScriptInputBox = Instance.new("TextBox")
 GameScriptInputBox.Parent = GameScriptsPage
-GameScriptInputBox.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
+GameScriptInputBox.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+GameScriptInputBox.BackgroundTransparency = 0.5
 GameScriptInputBox.Position = UDim2.new(0, 0, 0, 186)
 GameScriptInputBox.Size = UDim2.new(1, -4, 0, 30)
 GameScriptInputBox.Font = Enum.Font.Gotham
@@ -622,34 +771,26 @@ GameScriptInputBox.PlaceholderText = "فەرمانی یاری بنووسە..."
 GameScriptInputBox.Text = ""
 GameScriptInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 GameScriptInputBox.TextSize = 10
-
-local GSIBC = Instance.new("UICorner")
-GSIBC.CornerRadius = UDim.new(0, 3)
-GSIBC.Parent = GameScriptInputBox
+local GSIBC = Instance.new("UICorner") GSIBC.CornerRadius = UDim.new(0, 3) GSIBC.Parent = GameScriptInputBox
 
 local RunGameScriptBtn = Instance.new("TextButton")
 RunGameScriptBtn.Parent = GameScriptsPage
-RunGameScriptBtn.BackgroundColor3 = Color3.fromRGB(0, 160, 150)
+RunGameScriptBtn.BackgroundColor3 = Color3.fromRGB(0, 140, 255)
 RunGameScriptBtn.Position = UDim2.new(0, 0, 0, 222)
 RunGameScriptBtn.Size = UDim2.new(1, -4, 0, 30)
 RunGameScriptBtn.Font = Enum.Font.GothamBold
 RunGameScriptBtn.Text = "جێبەجێکردنی سکریپتی یاری"
 RunGameScriptBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 RunGameScriptBtn.TextSize = 10
-
-local RGSBC = Instance.new("UICorner")
-RGSBC.CornerRadius = UDim.new(0, 3)
-RGSBC.Parent = RunGameScriptBtn
+local RGSBC = Instance.new("UICorner") RGSBC.CornerRadius = UDim.new(0, 3) RGSBC.Parent = RunGameScriptBtn
 
 local function AddGameScriptMessage(senderTag, messageText, isUser)
     local MsgContainer = Instance.new("Frame")
     MsgContainer.Parent = GameScriptsHolder
-    MsgContainer.BackgroundColor3 = isUser and Color3.fromRGB(50, 20, 60) or Color3.fromRGB(15, 55, 45)
+    MsgContainer.BackgroundColor3 = isUser and Color3.fromRGB(0, 90, 180) or Color3.fromRGB(20, 20, 25)
+    MsgContainer.BackgroundTransparency = 0.3
     MsgContainer.Size = UDim2.new(1, -6, 0, 36)
-    
-    local MCC = Instance.new("UICorner")
-    MCC.CornerRadius = UDim.new(0, 3)
-    MCC.Parent = MsgContainer
+    local MCC = Instance.new("UICorner") MCC.CornerRadius = UDim.new(0, 3) MCC.Parent = MsgContainer
     
     local MsgLabel = Instance.new("TextLabel")
     MsgLabel.Parent = MsgContainer
@@ -658,10 +799,9 @@ local function AddGameScriptMessage(senderTag, messageText, isUser)
     MsgLabel.Size = UDim2.new(1, -12, 1, 0)
     MsgLabel.Font = Enum.Font.GothamBold
     MsgLabel.Text = "[" .. senderTag .. "]: " .. messageText
-    MsgLabel.TextColor3 = isUser and Color3.fromRGB(255, 215, 0) or Color3.fromRGB(0, 255, 180)
+    MsgLabel.TextColor3 = isUser and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(0, 200, 255)
     MsgLabel.TextSize = 9
     MsgLabel.TextXAlignment = Enum.TextXAlignment.Left
-    
     GameScriptsHolder.CanvasSize = UDim2.new(0, 0, 0, GameScriptsListLayout.AbsoluteContentSize.Y + 20)
 end
 
@@ -678,115 +818,15 @@ RunGameScriptBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- GLOBAL TIKTOK LIVE CHAT (ALL PLAYERS VISIBLE & 24H RETENTION)
-local TikTokChatHolder = Instance.new("ScrollingFrame")
-TikTokChatHolder.Parent = GlobalChatPage
-TikTokChatHolder.BackgroundColor3 = Color3.fromRGB(12, 12, 16)
-TikTokChatHolder.Size = UDim2.new(1, -4, 0, 180)
-TikTokChatHolder.CanvasSize = UDim2.new(0, 0, 2, 0)
-TikTokChatHolder.ScrollBarThickness = 2
-TikTokChatHolder.AutomaticCanvasSize = Enum.AutomaticSize.Y
-
-local TTCHCorner = Instance.new("UICorner")
-TTCHCorner.CornerRadius = UDim.new(0, 4)
-TTCHCorner.Parent = TikTokChatHolder
-
-local TikTokChatListLayout = Instance.new("UIListLayout")
-TikTokChatListLayout.Parent = TikTokChatHolder
-TikTokChatListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-TikTokChatListLayout.Padding = UDim.new(0, 3)
-
-local TikTokChatInputBox = Instance.new("TextBox")
-TikTokChatInputBox.Parent = GlobalChatPage
-TikTokChatInputBox.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
-TikTokChatInputBox.Position = UDim2.new(0, 0, 0, 186)
-TikTokChatInputBox.Size = UDim2.new(1, -4, 0, 30)
-TikTokChatInputBox.Font = Enum.Font.Gotham
-TikTokChatInputBox.PlaceholderText = "قسەی خۆت لێرە بنووسە (تۆمارکراو بۆ 24 کاتژمێر)..."
-TikTokChatInputBox.Text = ""
-TikTokChatInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-TikTokChatInputBox.TextSize = 10
-
-local TTCIBC = Instance.new("UICorner")
-TTCIBC.CornerRadius = UDim.new(0, 3)
-TTCIBC.Parent = TikTokChatInputBox
-
-local SendTikTokChatBtn = Instance.new("TextButton")
-SendTikTokChatBtn.Parent = GlobalChatPage
-SendTikTokChatBtn.BackgroundColor3 = Color3.fromRGB(0, 160, 150)
-SendTikTokChatBtn.Position = UDim2.new(0, 0, 0, 222)
-SendTikTokChatBtn.Size = UDim2.new(1, -4, 0, 30)
-SendTikTokChatBtn.Font = Enum.Font.GothamBold
-SendTikTokChatBtn.Text = "ناردن بۆ هەمووان (Global Send)"
-SendTikTokChatBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-SendTikTokChatBtn.TextSize = 10
-
-local STTCBC = Instance.new("UICorner")
-STTCBC.CornerRadius = UDim.new(0, 3)
-STTCBC.Parent = SendTikTokChatBtn
-
-local function AddTikTokMessage(senderName, messageText, isOwner, userId)
-    local MsgContainer = Instance.new("Frame")
-    MsgContainer.Parent = TikTokChatHolder
-    MsgContainer.BackgroundColor3 = isOwner and Color3.fromRGB(50, 35, 10) or Color3.fromRGB(20, 20, 30)
-    MsgContainer.BackgroundTransparency = 0.2
-    MsgContainer.Size = UDim2.new(1, -4, 0, 28)
-    
-    local MCC = Instance.new("UICorner")
-    MCC.CornerRadius = UDim.new(0, 3)
-    MCC.Parent = MsgContainer
-    
-    local MsgLabel = Instance.new("TextLabel")
-    MsgLabel.Parent = MsgContainer
-    MsgLabel.BackgroundTransparency = 1
-    MsgLabel.Position = UDim2.new(0, 6, 0, 0)
-    MsgLabel.Size = UDim2.new(1, -12, 1, 0)
-    MsgLabel.Font = Enum.Font.GothamBold
-    MsgLabel.Text = (isOwner and "[سەرۆک 👑] " or "") .. senderName .. ": " .. messageText
-    MsgLabel.TextColor3 = isOwner and Color3.fromRGB(255, 215, 0) or Color3.fromRGB(255, 255, 255)
-    MsgLabel.TextSize = 9
-    MsgLabel.TextXAlignment = Enum.TextXAlignment.Left
-    TikTokChatHolder.CanvasPosition = Vector2.new(0, TikTokChatHolder.AbsoluteCanvasSize.Y)
-end
-
-AddTikTokMessage("ObitoSystem", "چاتی گشتی چالاکە (لای هەمووان دەردەکەوێت)", false, 1)
-
-pcall(function()
-    MessagingService:SubscribeAsync("ObitoGlobalTikTokChatV24Hours", function(message)
-        local data = message.Data
-        if data and data.sender and data.text then
-            AddTikTokMessage(data.sender, data.text, data.isOwner, data.userId)
-        end
-    end)
-end)
-
-SendTikTokChatBtn.MouseButton1Click:Connect(function()
-    local text = TikTokChatInputBox.Text
-    if text ~= "" then
-        pcall(function()
-            MessagingService:PublishAsync("ObitoGlobalTikTokChatV24Hours", {
-                sender = LocalPlayer.Name,
-                text = text,
-                isOwner = (LocalPlayer.Name == "obito_dev6" or true),
-                userId = LocalPlayer.UserId,
-                timestamp = os.time()
-            })
-        end)
-        TikTokChatInputBox.Text = ""
-    end
-end)
-
 -- GEMINI CHAT TAB
 local GeminiHolder = Instance.new("ScrollingFrame")
 GeminiHolder.Parent = GeminiChatPage
-GeminiHolder.BackgroundColor3 = Color3.fromRGB(15, 45, 55)
+GeminiHolder.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
+GeminiHolder.BackgroundTransparency = 0.5
 GeminiHolder.Size = UDim2.new(1, -4, 0, 180)
 GeminiHolder.CanvasSize = UDim2.new(0, 0, 2, 0)
 GeminiHolder.ScrollBarThickness = 3
-
-local GHC = Instance.new("UICorner")
-GHC.CornerRadius = UDim.new(0, 4)
-GHC.Parent = GeminiHolder
+local GHC = Instance.new("UICorner") GHC.CornerRadius = UDim.new(0, 4) GHC.Parent = GeminiHolder
 
 local GeminiListLayout = Instance.new("UIListLayout")
 GeminiListLayout.Parent = GeminiHolder
@@ -795,7 +835,8 @@ GeminiListLayout.Padding = UDim.new(0, 4)
 
 local GeminiInputBox = Instance.new("TextBox")
 GeminiInputBox.Parent = GeminiChatPage
-GeminiInputBox.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
+GeminiInputBox.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+GeminiInputBox.BackgroundTransparency = 0.5
 GeminiInputBox.Position = UDim2.new(0, 0, 0, 186)
 GeminiInputBox.Size = UDim2.new(1, -4, 0, 30)
 GeminiInputBox.Font = Enum.Font.Gotham
@@ -803,34 +844,26 @@ GeminiInputBox.PlaceholderText = "پرسیار لە جەمینی بکە..."
 GeminiInputBox.Text = ""
 GeminiInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 GeminiInputBox.TextSize = 10
-
-local GIBC = Instance.new("UICorner")
-GIBC.CornerRadius = UDim.new(0, 3)
-GIBC.Parent = GeminiInputBox
+local GIBC = Instance.new("UICorner") GIBC.CornerRadius = UDim.new(0, 3) GIBC.Parent = GeminiInputBox
 
 local SendGeminiBtn = Instance.new("TextButton")
 SendGeminiBtn.Parent = GeminiChatPage
-SendGeminiBtn.BackgroundColor3 = Color3.fromRGB(0, 160, 150)
+SendGeminiBtn.BackgroundColor3 = Color3.fromRGB(0, 140, 255)
 SendGeminiBtn.Position = UDim2.new(0, 0, 0, 222)
 SendGeminiBtn.Size = UDim2.new(1, -4, 0, 30)
 SendGeminiBtn.Font = Enum.Font.GothamBold
 SendGeminiBtn.Text = "ناردن بۆ جەمینی (Send to Gemini)"
 SendGeminiBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 SendGeminiBtn.TextSize = 10
-
-local SGBC = Instance.new("UICorner")
-SGBC.CornerRadius = UDim.new(0, 3)
-SGBC.Parent = SendGeminiBtn
+local SGBC = Instance.new("UICorner") SGBC.CornerRadius = UDim.new(0, 3) SGBC.Parent = SendGeminiBtn
 
 local function AddGeminiMessage(senderTag, messageText, isUser)
     local MsgContainer = Instance.new("Frame")
     MsgContainer.Parent = GeminiHolder
-    MsgContainer.BackgroundColor3 = isUser and Color3.fromRGB(40, 20, 70) or Color3.fromRGB(20, 60, 70)
+    MsgContainer.BackgroundColor3 = isUser and Color3.fromRGB(0, 90, 180) or Color3.fromRGB(20, 20, 25)
+    MsgContainer.BackgroundTransparency = 0.3
     MsgContainer.Size = UDim2.new(1, -6, 0, 32)
-    
-    local MCC = Instance.new("UICorner")
-    MCC.CornerRadius = UDim.new(0, 3)
-    MCC.Parent = MsgContainer
+    local MCC = Instance.new("UICorner") MCC.CornerRadius = UDim.new(0, 3) MCC.Parent = MsgContainer
     
     local MsgLabel = Instance.new("TextLabel")
     MsgLabel.Parent = MsgContainer
@@ -839,7 +872,7 @@ local function AddGeminiMessage(senderTag, messageText, isUser)
     MsgLabel.Size = UDim2.new(1, -12, 1, 0)
     MsgLabel.Font = Enum.Font.GothamBold
     MsgLabel.Text = "[" .. senderTag .. "]: " .. messageText
-    MsgLabel.TextColor3 = isUser and Color3.fromRGB(255, 215, 0) or Color3.fromRGB(0, 255, 200)
+    MsgLabel.TextColor3 = isUser and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(0, 200, 255)
     MsgLabel.TextSize = 9
     MsgLabel.TextXAlignment = Enum.TextXAlignment.Left
     GeminiHolder.CanvasSize = UDim2.new(0, 0, 0, GeminiListLayout.AbsoluteContentSize.Y + 20)
@@ -861,16 +894,14 @@ end)
 -- TRANSLATE TAB
 local TransBoxFrame = Instance.new("Frame")
 TransBoxFrame.Parent = TranslateTabPage
-TransBoxFrame.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
+TransBoxFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+TransBoxFrame.BackgroundTransparency = 0.5
 TransBoxFrame.Size = UDim2.new(1, -4, 0, 160)
-
-local TBFIC = Instance.new("UICorner")
-TBFIC.CornerRadius = UDim.new(0, 4)
-TBFIC.Parent = TransBoxFrame
+local TBFIC = Instance.new("UICorner") TBFIC.CornerRadius = UDim.new(0, 4) TBFIC.Parent = TransBoxFrame
 
 local InputTextBox = Instance.new("TextBox")
 InputTextBox.Parent = TransBoxFrame
-InputTextBox.BackgroundColor3 = Color3.fromRGB(15, 50, 60)
+InputTextBox.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
 InputTextBox.Position = UDim2.new(0, 6, 0, 28)
 InputTextBox.Size = UDim2.new(1, -12, 0, 32)
 InputTextBox.Font = Enum.Font.Gotham
@@ -878,38 +909,29 @@ InputTextBox.PlaceholderText = "تێکست بە کوردی بنووسە..."
 InputTextBox.Text = ""
 InputTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 InputTextBox.TextSize = 10
-
-local ITBC = Instance.new("UICorner")
-ITBC.CornerRadius = UDim.new(0, 3)
-ITBC.Parent = InputTextBox
+local ITBC = Instance.new("UICorner") ITBC.CornerRadius = UDim.new(0, 3) ITBC.Parent = InputTextBox
 
 local OutputLabel = Instance.new("TextLabel")
 OutputLabel.Parent = TransBoxFrame
-OutputLabel.BackgroundColor3 = Color3.fromRGB(15, 50, 60)
+OutputLabel.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
 OutputLabel.Position = UDim2.new(0, 6, 0, 66)
 OutputLabel.Size = UDim2.new(1, -12, 0, 32)
 OutputLabel.Font = Enum.Font.GothamBold
 OutputLabel.Text = "وەگێڕدراو بۆ ئینگلیزی..."
-OutputLabel.TextColor3 = Color3.fromRGB(0, 255, 150)
+OutputLabel.TextColor3 = Color3.fromRGB(0, 200, 255)
 OutputLabel.TextSize = 10
-
-local OLBC = Instance.new("UICorner")
-OLBC.CornerRadius = UDim.new(0, 3)
-OLBC.Parent = OutputLabel
+local OLBC = Instance.new("UICorner") OLBC.CornerRadius = UDim.new(0, 3) OLBC.Parent = OutputLabel
 
 local CopyTransBtn = Instance.new("TextButton")
 CopyTransBtn.Parent = TransBoxFrame
-CopyTransBtn.BackgroundColor3 = Color3.fromRGB(0, 160, 150)
+CopyTransBtn.BackgroundColor3 = Color3.fromRGB(0, 140, 255)
 CopyTransBtn.Position = UDim2.new(0, 6, 0, 106)
 CopyTransBtn.Size = UDim2.new(1, -12, 0, 42)
 CopyTransBtn.Font = Enum.Font.GothamBold
 CopyTransBtn.Text = "وەرگێڕان، کۆپیکردن و ناردن بۆ چات"
 CopyTransBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 CopyTransBtn.TextSize = 10
-
-local CTBC = Instance.new("UICorner")
-CTBC.CornerRadius = UDim.new(0, 3)
-CTBC.Parent = CopyTransBtn
+local CTBC = Instance.new("UICorner") CTBC.CornerRadius = UDim.new(0, 3) CTBC.Parent = CopyTransBtn
 
 CopyTransBtn.MouseButton1Click:Connect(function()
     local text = InputTextBox.Text
@@ -923,40 +945,32 @@ end)
 -- OUTFIT TAB
 local OutfitFrame = Instance.new("Frame")
 OutfitFrame.Parent = OutfitTabPage
-OutfitFrame.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
+OutfitFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+OutfitFrame.BackgroundTransparency = 0.5
 OutfitFrame.Size = UDim2.new(1, -4, 0, 110)
-
-local OFC = Instance.new("UICorner")
-OFC.CornerRadius = UDim.new(0, 4)
-OFC.Parent = OutfitFrame
+local OFC = Instance.new("UICorner") OFC.CornerRadius = UDim.new(0, 4) OFC.Parent = OutfitFrame
 
 local OutfitStatus = Instance.new("TextLabel")
 OutfitStatus.Parent = OutfitFrame
-OutfitStatus.BackgroundColor3 = Color3.fromRGB(15, 50, 60)
+OutfitStatus.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
 OutfitStatus.Position = UDim2.new(0, 6, 0, 28)
 OutfitStatus.Size = UDim2.new(1, -12, 0, 32)
 OutfitStatus.Font = Enum.Font.Gotham
 OutfitStatus.Text = "کەسێك دیاری بکە بۆ کۆپیکردنی جل..."
 OutfitStatus.TextColor3 = Color3.fromRGB(255, 255, 255)
 OutfitStatus.TextSize = 9
-
-local OSC = Instance.new("UICorner")
-OSC.CornerRadius = UDim.new(0, 3)
-OSC.Parent = OutfitStatus
+local OSC = Instance.new("UICorner") OSC.CornerRadius = UDim.new(0, 3) OSC.Parent = OutfitStatus
 
 local CopyOutfitBtn = Instance.new("TextButton")
 CopyOutfitBtn.Parent = OutfitFrame
-CopyOutfitBtn.BackgroundColor3 = Color3.fromRGB(0, 160, 150)
+CopyOutfitBtn.BackgroundColor3 = Color3.fromRGB(0, 140, 255)
 CopyOutfitBtn.Position = UDim2.new(0, 6, 0, 68)
 CopyOutfitBtn.Size = UDim2.new(1, -12, 0, 34)
 CopyOutfitBtn.Font = Enum.Font.GothamBold
 CopyOutfitBtn.Text = "کۆپیکردنی جل، دەست، قاچ، سەر بە 1 کلیک"
 CopyOutfitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 CopyOutfitBtn.TextSize = 10
-
-local COBC = Instance.new("UICorner")
-COBC.CornerRadius = UDim.new(0, 3)
-COBC.Parent = CopyOutfitBtn
+local COBC = Instance.new("UICorner") COBC.CornerRadius = UDim.new(0, 3) COBC.Parent = CopyOutfitBtn
 
 CopyOutfitBtn.MouseButton1Click:Connect(function()
     if SelectedTarget and SelectedTarget.Character and LocalPlayer.Character then
@@ -977,16 +991,14 @@ end)
 -- COPY DANCE TAB
 local CopyDanceFrame = Instance.new("Frame")
 CopyDanceFrame.Parent = CopyDancePage
-CopyDanceFrame.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
+CopyDanceFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+CopyDanceFrame.BackgroundTransparency = 0.5
 CopyDanceFrame.Size = UDim2.new(1, -4, 0, 140)
-
-local CDFCC = Instance.new("UICorner")
-CDFCC.CornerRadius = UDim.new(0, 4)
-CDFCC.Parent = CopyDanceFrame
+local CDFCC = Instance.new("UICorner") CDFCC.CornerRadius = UDim.new(0, 4) CDFCC.Parent = CopyDanceFrame
 
 local CopyDanceStatus = Instance.new("TextLabel")
 CopyDanceStatus.Parent = CopyDanceFrame
-CopyDanceStatus.BackgroundColor3 = Color3.fromRGB(15, 50, 60)
+CopyDanceStatus.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
 CopyDanceStatus.Position = UDim2.new(0, 6, 0, 28)
 CopyDanceStatus.Size = UDim2.new(1, -12, 0, 45)
 CopyDanceStatus.Font = Enum.Font.Gotham
@@ -994,24 +1006,18 @@ CopyDanceStatus.Text = "کۆپیکردنی دەنس لە نزیکترین کەس
 CopyDanceStatus.TextColor3 = Color3.fromRGB(255, 255, 255)
 CopyDanceStatus.TextSize = 9
 CopyDanceStatus.TextWrapped = true
-
-local CDSSC = Instance.new("UICorner")
-CDSSC.CornerRadius = UDim.new(0, 3)
-CDSSC.Parent = CopyDanceStatus
+local CDSSC = Instance.new("UICorner") CDSSC.CornerRadius = UDim.new(0, 3) CDSSC.Parent = CopyDanceStatus
 
 local CopyDanceBtn = Instance.new("TextButton")
 CopyDanceBtn.Parent = CopyDanceFrame
-CopyDanceBtn.BackgroundColor3 = Color3.fromRGB(0, 160, 150)
+CopyDanceBtn.BackgroundColor3 = Color3.fromRGB(0, 140, 255)
 CopyDanceBtn.Position = UDim2.new(0, 6, 0, 85)
 CopyDanceBtn.Size = UDim2.new(1, -12, 0, 40)
 CopyDanceBtn.Font = Enum.Font.GothamBold
 CopyDanceBtn.Text = "کۆپیکردنی دەنس (Copy Target Dance)"
 CopyDanceBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 CopyDanceBtn.TextSize = 9
-
-local CDBC = Instance.new("UICorner")
-CDBC.CornerRadius = UDim.new(0, 3)
-CDBC.Parent = CopyDanceBtn
+local CDBC = Instance.new("UICorner") CDBC.CornerRadius = UDim.new(0, 3) CDBC.Parent = CopyDanceBtn
 
 CopyDanceBtn.MouseButton1Click:Connect(function()
     pcall(function()
@@ -1040,61 +1046,7 @@ CopyDanceBtn.MouseButton1Click:Connect(function()
     end)
 end)
 
--- ANIMATION HUB TAB
-local function CreateAnimButton(name, animId)
-    local AnimBtn = Instance.new("TextButton")
-    AnimBtn.Parent = AnimHubPage
-    AnimBtn.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
-    AnimBtn.Size = UDim2.new(1, -4, 0, 32)
-    AnimBtn.Font = Enum.Font.GothamBold
-    AnimBtn.Text = name
-    AnimBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    AnimBtn.TextSize = 10
-    local ABC = Instance.new("UICorner")
-    ABC.CornerRadius = UDim.new(0, 4)
-    ABC.Parent = AnimBtn
-    local currentAnimTrack = nil
-    AnimBtn.MouseButton1Click:Connect(function()
-        pcall(function()
-            local char = LocalPlayer.Character
-            if char and char:FindFirstChildOfClass("Humanoid") then
-                local animator = char.Humanoid:FindFirstChildOfClass("Animator") or Instance.new("Animator", char.Humanoid)
-                if currentAnimTrack then currentAnimTrack:Stop() end
-                local animObject = Instance.new("Animation")
-                animObject.AnimationId = "rbxassetid://" .. tostring(animId)
-                currentAnimTrack = animator:LoadAnimation(animObject)
-                currentAnimTrack.Looped = true
-                currentAnimTrack:Play()
-            end
-        end)
-    end)
-end
-
-CreateAnimButton("🔥 ئەنیمەیشنی Jerk", 33796059)
-CreateAnimButton("🔹 ئەنیمەیشنی سەما (Dance 1)", 507710230)
-CreateAnimButton("🔹 ئەنیمەیشنی شۆک / گریان", 507770677)
-
-local StopAnimBtn = Instance.new("TextButton")
-StopAnimBtn.Parent = AnimHubPage
-StopAnimBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
-StopAnimBtn.Size = UDim2.new(1, -4, 0, 32)
-StopAnimBtn.Font = Enum.Font.GothamBold
-StopAnimBtn.Text = "❌ ڕاگرتنی هەموو ئەنیمەیشنەکان"
-StopAnimBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-StopAnimBtn.TextSize = 10
-local SABC = Instance.new("UICorner")
-SABC.CornerRadius = UDim.new(0, 4)
-SABC.Parent = StopAnimBtn
-StopAnimBtn.MouseButton1Click:Connect(function()
-    pcall(function()
-        local char = LocalPlayer.Character
-        if char and char:FindFirstChildOfClass("Humanoid") then
-            for _, track in pairs(char.Humanoid:GetPlayingAnimationTracks()) do track:Stop() end
-        end
-    end)
-end)
-
--- 1v1 DUELS TAB (UPDATED WITH MULTI-TARGET HISTORY, AVATARS, & LEAVE TRACKER)
+-- 💀 بەشی سەر بڕاوەکان (تۆ باشترینت هەلبژاردوە و باشترینی ساحەکە ئەبی)
 local DuelMainScroll = Instance.new("ScrollingFrame")
 DuelMainScroll.Parent = Duels1v1Page
 DuelMainScroll.BackgroundTransparency = 1
@@ -1107,10 +1059,22 @@ DMSLayout.Parent = DuelMainScroll
 DMSLayout.SortOrder = Enum.SortOrder.LayoutOrder
 DMSLayout.Padding = UDim.new(0, 8)
 
--- Active Live Duel Box
+-- سەردێڕی تایبەت بە داواکارییەکەت
+local EliteHeaderBanner = Instance.new("TextLabel")
+EliteHeaderBanner.Parent = DuelMainScroll
+EliteHeaderBanner.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+EliteHeaderBanner.BackgroundTransparency = 0.3
+EliteHeaderBanner.Size = UDim2.new(1, -4, 0, 32)
+EliteHeaderBanner.Font = Enum.Font.GothamBold
+EliteHeaderBanner.Text = "👑 تۆ باشترینت هەلبژاردوە و باشترینی ساحەکە ئەبی"
+EliteHeaderBanner.TextColor3 = Color3.fromRGB(255, 255, 255)
+EliteHeaderBanner.TextSize = 9
+local EHBC = Instance.new("UICorner") EHBC.CornerRadius = UDim.new(0, 4) EHBC.Parent = EliteHeaderBanner
+
 local ActiveDuelFrame = Instance.new("Frame")
 ActiveDuelFrame.Parent = DuelMainScroll
-ActiveDuelFrame.BackgroundColor3 = Color3.fromRGB(22, 70, 80)
+ActiveDuelFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+ActiveDuelFrame.BackgroundTransparency = 0.5
 ActiveDuelFrame.Size = UDim2.new(1, -4, 0, 175)
 local ADFC = Instance.new("UICorner") ADFC.CornerRadius = UDim.new(0, 4) ADFC.Parent = ActiveDuelFrame
 
@@ -1131,19 +1095,18 @@ EnemyAvatar.Parent = ActiveDuelFrame EnemyAvatar.BackgroundColor3 = Color3.fromR
 local EAC = Instance.new("UICorner") EAC.CornerRadius = UDim.new(1, 0) EAC.Parent = EnemyAvatar
 
 local DuelStatusLabel = Instance.new("TextLabel")
-DuelStatusLabel.Parent = ActiveDuelFrame DuelStatusLabel.BackgroundColor3 = Color3.fromRGB(15, 50, 60)
+DuelStatusLabel.Parent = ActiveDuelFrame DuelStatusLabel.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
 DuelStatusLabel.Position = UDim2.new(0, 8, 0, 88) DuelStatusLabel.Size = UDim2.new(1, -16, 0, 75)
-DuelStatusLabel.Font = Enum.Font.Gotham DuelStatusLabel.Text = "کەسێك دیاری بکە بۆ دەستپێکردنی ململانێ..."
+DuelStatusLabel.Font = Enum.Font.Gotham DuelStatusLabel.Text = "کەسێك بانگ بکە و چاوەڕێی لیفت بن..."
 DuelStatusLabel.TextColor3 = Color3.fromRGB(255, 255, 255) DuelStatusLabel.TextSize = 10 DuelStatusLabel.TextWrapped = true
 local DSLC = Instance.new("UICorner") DSLC.CornerRadius = UDim.new(0, 4) DSLC.Parent = DuelStatusLabel
 
--- History List Container
 local HistoryHeader = Instance.new("TextLabel")
 HistoryHeader.Parent = DuelMainScroll
 HistoryHeader.BackgroundTransparency = 1
 HistoryHeader.Size = UDim2.new(1, -4, 0, 25)
 HistoryHeader.Font = Enum.Font.GothamBold
-HistoryHeader.Text = "📜 مێژووی ململانێکان (History):"
+HistoryHeader.Text = "💀 لیستی سەر بڕاوەکان (لێفت کردوەکان):"
 HistoryHeader.TextColor3 = Color3.fromRGB(255, 215, 0)
 HistoryHeader.TextSize = 11
 HistoryHeader.TextXAlignment = Enum.TextXAlignment.Left
@@ -1164,14 +1127,13 @@ local activeLeaveConnection = nil
 RunService.Heartbeat:Connect(function()
     if SelectedTarget and SelectedTarget.Parent then
         EnemyAvatar.Image = Players:GetUserThumbnailAsync(SelectedTarget.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
-        DuelStatusLabel.Text = "ململانێی ڕاستەقینە لەگەڵ: " .. SelectedTarget.Name
+        DuelStatusLabel.Text = "ئامانج دیاریکراوە بۆ سەر بڕین: " .. SelectedTarget.Name
         
         if not trackedEnemies[SelectedTarget.UserId] then
             trackedEnemies[SelectedTarget.UserId] = {
                 name = SelectedTarget.Name,
                 userId = SelectedTarget.UserId,
-                leftCount = 0,
-                status = "لە یارییەکەیە"
+                leftCount = 0
             }
             
             if activeLeaveConnection then activeLeaveConnection:Disconnect() end
@@ -1179,27 +1141,35 @@ RunService.Heartbeat:Connect(function()
             local currentTargetRef = SelectedTarget
             activeLeaveConnection = Players.PlayerRemoving:Connect(function(player)
                 if player == currentTargetRef then
-                    if trackedEnemies[player.UserId] then
-                        trackedEnemies[player.UserId].leftCount = trackedEnemies[player.UserId].leftCount + 1
-                        trackedEnemies[player.UserId].status = "یەک جار لیفتی کردوە ❌"
-                    end
-                    DuelStatusLabel.Text = "« " .. player.Name .. " لێفتی کرد! (یەک جار لیفتی کردوە) »"
+                    trackedEnemies[player.UserId].leftCount = trackedEnemies[player.UserId].leftCount + 1
+                    DuelStatusLabel.Text = "« " .. player.Name .. " چەنسانیە بانگت کرد و لێفتی کرد! ❌ »"
                     
                     pcall(function()
                         local HistoryItem = Instance.new("Frame")
                         HistoryItem.Parent = HistoryContainer
-                        HistoryItem.BackgroundColor3 = Color3.fromRGB(18, 55, 65)
-                        HistoryItem.Size = UDim2.new(1, 0, 0, 35)
-                        local HIC = Instance.new("UICorner") HIC.CornerRadius = UDim.new(0, 3) HIC.Parent = HistoryItem
+                        HistoryItem.BackgroundColor3 = Color3.fromRGB(25, 20, 30)
+                        HistoryItem.BackgroundTransparency = 0.3
+                        HistoryItem.Size = UDim2.new(1, 0, 0, 45)
+                        local HIC = Instance.new("UICorner") HIC.CornerRadius = UDim.new(0, 4) HIC.Parent = HistoryItem
                         
+                        -- Roblox User Thumbnail in History Item
+                        local HistThumb = Instance.new("ImageLabel")
+                        HistThumb.Parent = HistoryItem
+                        HistThumb.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+                        HistThumb.Position = UDim2.new(0, 6, 0.5, -16)
+                        HistThumb.Size = UDim2.new(0, 32, 0, 32)
+                        HistThumb.Image = Players:GetUserThumbnailAsync(player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
+                        local HTC = Instance.new("UICorner") HTC.CornerRadius = UDim.new(1, 0) HTC.Parent = HistThumb
+                        
+                        -- Name and Status Text
                         local HistText = Instance.new("TextLabel")
                         HistText.Parent = HistoryItem
                         HistText.BackgroundTransparency = 1
-                        HistText.Position = UDim2.new(0, 8, 0, 0)
-                        HistText.Size = UDim2.new(1, -16, 1, 0)
+                        HistText.Position = UDim2.new(0, 46, 0, 0)
+                        HistText.Size = UDim2.new(1, -52, 1, 0)
                         HistText.Font = Enum.Font.GothamBold
-                        HistText.Text = "👤 " .. player.Name .. " ➔ یەک جار لیفتی کردوە ❌"
-                        HistText.TextColor3 = Color3.fromRGB(255, 100, 100)
+                        HistText.Text = player.Name .. " ➔ بانگت کرد و لێفتی کرد ❌"
+                        HistText.TextColor3 = Color3.fromRGB(255, 90, 90)
                         HistText.TextSize = 9
                         HistText.TextXAlignment = Enum.TextXAlignment.Left
                         
@@ -1212,18 +1182,21 @@ RunService.Heartbeat:Connect(function()
     else
         EnemyAvatar.Image = "rbxassetid://0"
         if not SelectedTarget then
-            DuelStatusLabel.Text = "کەسێك هەڵبژێرە بۆ دەستپێکردنی ململانێ..."
+            DuelStatusLabel.Text = "کەسێك بانگ بکە و چاوەڕێی لیفت بن..."
         end
     end
 end)
 
 -- TARGET TAB
 local TargetInputFrame = Instance.new("Frame")
-TargetInputFrame.Parent = TargetTabPage TargetInputFrame.BackgroundColor3 = Color3.fromRGB(22, 70, 80) TargetInputFrame.Size = UDim2.new(1, -4, 0, 45)
+TargetInputFrame.Parent = TargetTabPage 
+TargetInputFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25) 
+TargetInputFrame.BackgroundTransparency = 0.5
+TargetInputFrame.Size = UDim2.new(1, -4, 0, 45)
 local TIC = Instance.new("UICorner") TIC.CornerRadius = UDim.new(0, 4) TIC.Parent = TargetInputFrame
 
 local TargetTextBox = Instance.new("TextBox")
-TargetTextBox.Parent = TargetInputFrame TargetTextBox.BackgroundColor3 = Color3.fromRGB(15, 50, 60) TargetTextBox.Position = UDim2.new(0, 6, 0.5, -14) TargetTextBox.Size = UDim2.new(1, -12, 0, 28)
+TargetTextBox.Parent = TargetInputFrame TargetTextBox.BackgroundColor3 = Color3.fromRGB(10, 10, 15) TargetTextBox.Position = UDim2.new(0, 6, 0.5, -14) TargetTextBox.Size = UDim2.new(1, -12, 0, 28)
 TargetTextBox.Font = Enum.Font.Gotham TargetTextBox.PlaceholderText = "ناوی نەفەر بنووسە..." TargetTextBox.Text = "" TargetTextBox.TextColor3 = Color3.fromRGB(255, 255, 255) TargetTextBox.TextSize = 10
 local TBCC = Instance.new("UICorner") TBCC.CornerRadius = UDim.new(0, 3) TBCC.Parent = TargetTextBox
 
@@ -1240,7 +1213,14 @@ TargetTextBox.FocusLost:Connect(function(enterPressed)
     end
 end)
 
--- TROLL TAB COMPONENTS
+-- TROLL TAB
+local function setSafePlatform(state)
+    pcall(function()
+        local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if hum then hum.PlatformStand = state end
+    end)
+end
+
 local R6SitBangActive = false
 CreateToggleComponent(MainTabPage, "💺 R6 دانیشتن و تەکان بۆ دەم (Ultra Fast)", function(state)
     R6SitBangActive = state
@@ -1255,8 +1235,9 @@ CreateToggleComponent(MainTabPage, "💺 R6 دانیشتن و تەکان بۆ د
                 LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.Head.CFrame * CFrame.new(0, 0.15, -0.6 + thrust) * CFrame.Angles(0, math.pi, 0)
             end
         end
+        setSafePlatform(false)
         local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-        if hum then hum.Sit = false hum.PlatformStand = false end
+        if hum then hum.Sit = false end
     end)
 end)
 
@@ -1267,14 +1248,12 @@ CreateToggleComponent(MainTabPage, "⚡ بانگی هایپەری زۆر خێر�
         while HyperBangActive do
             RunService.RenderStepped:Wait()
             if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-                if hum then hum.PlatformStand = true end
+                setSafePlatform(true)
                 local hOffset = math.sin(tick() * 140) * 0.9
                 LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0.5 + hOffset) * CFrame.Angles(math.rad(30), 0, 0)
             end
         end
-        local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-        if hum then hum.PlatformStand = false end
+        setSafePlatform(false)
     end)
 end)
 
@@ -1285,14 +1264,12 @@ CreateToggleComponent(MainTabPage, "🔥 بانگی ئۆبیتۆ پرایم (Obi
         while PrimeBangActive do
             task.wait(0.002)
             if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-                if hum then hum.PlatformStand = true end
+                setSafePlatform(true)
                 local off = math.abs(math.sin(tick() * 55)) * 1.3
                 LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0.5 + off) * CFrame.Angles(math.rad(20), 0, 0)
             end
         end
-        local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-        if hum then hum.PlatformStand = false end
+        setSafePlatform(false)
     end)
 end)
 
@@ -1316,14 +1293,12 @@ CreateToggleComponent(MainTabPage, "🍑 بانگی ژێرەوە و پشت (Bott
         while BangBottomActive do
             task.wait(0.002)
             if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-                if hum then hum.PlatformStand = true end
+                setSafePlatform(true)
                 local off = math.sin(tick() * 65) * 1.2
                 LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(0, -0.1, 0.7 + off) * CFrame.Angles(0, 0, 0)
             end
         end
-        local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-        if hum then hum.PlatformStand = false end
+        setSafePlatform(false)
     end)
 end)
 
@@ -1334,8 +1309,7 @@ CreateToggleComponent(MainTabPage, "🌪️ سووڕانەوە و بانگی خ�
         while UltraFastOrbitActive do
             RunService.RenderStepped:Wait()
             if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-                if hum then hum.PlatformStand = true end
+                setSafePlatform(true)
                 local angle = tick() * 45
                 local x = math.cos(angle) * 2.5
                 local z = math.sin(angle) * 2.5
@@ -1343,8 +1317,7 @@ CreateToggleComponent(MainTabPage, "🌪️ سووڕانەوە و بانگی خ�
                 LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(x, th, z) * CFrame.Angles(0, -angle, 0)
             end
         end
-        local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-        if hum then hum.PlatformStand = false end
+        setSafePlatform(false)
     end)
 end)
 
@@ -1355,15 +1328,13 @@ CreateToggleComponent(MainTabPage, "💥 بانگی شێتی خێرای بێوە
         while MegaSpazBangActive do
             RunService.RenderStepped:Wait()
             if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-                if hum then hum.PlatformStand = true end
+                setSafePlatform(true)
                 local rx = math.random(-200, 200) / 100
                 local rz = math.random(-200, 200) / 100
                 LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(rx, 0.2, rz) * CFrame.Angles(math.random(-5,5), math.random(-5,5), 0)
             end
         end
-        local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-        if hum then hum.PlatformStand = false end
+        setSafePlatform(false)
     end)
 end)
 
@@ -1374,14 +1345,12 @@ CreateToggleComponent(MainTabPage, "🚀 بانگی مووشەکی بەرەو ئ
         while VerticalRocketBangActive do
             RunService.RenderStepped:Wait()
             if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-                if hum then hum.PlatformStand = true end
+                setSafePlatform(true)
                 local upOffset = math.sin(tick() * 90) * 2.5
                 LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(0, upOffset, 0.4) * CFrame.Angles(math.rad(90), 0, 0)
             end
         end
-        local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-        if hum then hum.PlatformStand = false end
+        setSafePlatform(false)
     end)
 end)
 
@@ -1392,15 +1361,56 @@ CreateToggleComponent(MainTabPage, "🌋 بانگی بوومەلەرزە (Earthq
         while EarthquakeBangActive do
             task.wait(0.01)
             if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-                if hum then hum.PlatformStand = true end
+                setSafePlatform(true)
                 local qx = (math.random() - 0.5) * 1.5
                 local qz = (math.random() - 0.5) * 1.5
                 LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(qx, 0, 0.6 + qz) * CFrame.Angles(0, 0, 0)
             end
         end
-        local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-        if hum then hum.PlatformStand = false end
+        setSafePlatform(false)
+    end)
+end)
+
+local SmoothTrollBangActive = false
+CreateToggleComponent(MainTabPage, "🛡️ بانگی پارێزراوی نەرم (Smooth Safe Troll)", function(state)
+    SmoothTrollBangActive = state
+    task.spawn(function()
+        while SmoothTrollBangActive do
+            task.wait(0.003)
+            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                local smoothOffset = math.sin(tick() * 25) * 0.8
+                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 1.2 + smoothOffset)
+            end
+        end
+    end)
+end)
+
+local BehindTeleportBangActive = false
+CreateToggleComponent(MainTabPage, "👻 بانگی پشتەوەی خێرا (Behind Teleport Bang)", function(state)
+    BehindTeleportBangActive = state
+    task.spawn(function()
+        while BehindTeleportBangActive do
+            task.wait(0.1)
+            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 2.5) * CFrame.Angles(0, math.pi, 0)
+            end
+        end
+    end)
+end)
+
+local Spin360BangActive = false
+CreateToggleComponent(MainTabPage, "🔄 بانگی سووڕانەوەی ٣٦٠ پلە (Spin 360 Bang)", function(state)
+    Spin360BangActive = state
+    task.spawn(function()
+        while Spin360BangActive do
+            RunService.RenderStepped:Wait()
+            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                setSafePlatform(true)
+                local rotAngle = tick() * 20
+                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 1) * CFrame.Angles(0, rotAngle, 0)
+            end
+        end
+        setSafePlatform(false)
     end)
 end)
 
@@ -1455,15 +1465,16 @@ game:GetService("UserInputService").JumpRequest:Connect(function()
 end)
 CreateToggleComponent(PlayersTabPage, "🚀 بازدانی بێسنوور (Inf Jump)", function(state) InfJumpEnabled = state end)
 
--- Floating Toggle Button (Modern Built-in Logo)
+-- Floating Toggle Button
 local ToggleButton = Instance.new("TextButton")
 ToggleButton.Parent = ObitoGui
-ToggleButton.BackgroundColor3 = Color3.fromRGB(20, 20, 26)
+ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+ToggleButton.BackgroundTransparency = 0.2
 ToggleButton.Position = UDim2.new(0, 10, 0.4, 0)
 ToggleButton.Size = UDim2.new(0, 42, 0, 42)
 ToggleButton.Font = Enum.Font.GothamBold
 ToggleButton.Text = "O"
-ToggleButton.TextColor3 = Color3.fromRGB(255, 215, 0)
+ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 ToggleButton.TextSize = 18
 
 local TBCorner = Instance.new("UICorner")
@@ -1472,9 +1483,9 @@ TBCorner.Parent = ToggleButton
 
 local TBGrad = Instance.new("UIGradient")
 TBGrad.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0.0, Color3.fromRGB(255, 100, 0)),
-    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 215, 0)),
-    ColorSequenceKeypoint.new(1.0, Color3.fromRGB(0, 200, 150))
+    ColorSequenceKeypoint.new(0.0, Color3.fromRGB(0, 180, 255)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0, 120, 255)),
+    ColorSequenceKeypoint.new(1.0, Color3.fromRGB(0, 80, 200))
 }
 TBGrad.Parent = ToggleButton
 
