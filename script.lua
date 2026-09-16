@@ -1319,3 +1319,124 @@ Tool.Activated:Connect(function()
         end
     end
 end)
+-- ئەمەش دەتوانیت بیخەیتە کۆتایی سکریپتە گەورەکەتەوە
+local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+local playerGui = localPlayer:WaitForChild("PlayerGui")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "LeaveNotificationGui"
+screenGui.Parent = playerGui
+
+Players.PlayerRemoving:Connect(function(player)
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(0, 350, 0, 50)
+    textLabel.Position = UDim2.new(0, 20, 0.8, 0)
+    textLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    textLabel.TextSize = 16
+    textLabel.Font = Enum.Font.SourceSansBold
+    textLabel.Text = "ویسەر: " .. player.Name .. " - ئەو کەسە گایرا"
+    textLabel.BackgroundTransparency = 0.3
+    textLabel.Parent = screenGui
+
+    task.delay(4, function()
+        textLabel:Destroy()
+    end)
+end)
+-- دروستکردنی پەنجەرەیەکی سادە بۆ دەڵتا
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local ToggleButton = Instance.new("TextButton")
+local UICorner = Instance.new("UICorner")
+
+ScreenGui.Name = "DeltaSimpleScript"
+ScreenGui.Parent = game.CoreGui
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+MainFrame.BorderSizePixel = 0
+MainFrame.Position = UDim2.new(0.1, 0, 0.2, 0)
+MainFrame.Size = UDim2.new(0, 180, 0, 70)
+MainFrame.Active = true
+MainFrame.Draggable = true -- دەتوانیت پەنجەرەکە بە دەست بجووڵێنیت بە شاشەکەدا
+
+UICorner.Parent = MainFrame
+
+ToggleButton.Name = "R6Button"
+ToggleButton.Parent = MainFrame
+ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ToggleButton.BorderSizePixel = 0
+ToggleButton.Position = UDim2.new(0.1, 0, 0.2, 0)
+ToggleButton.Size = UDim2.new(0, 144, 0, 40)
+ToggleButton.Font = Enum.Font.SourceSansBold
+ToggleButton.Text = "r6 pack"
+ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleButton.TextSize = 18
+
+local ButtonCorner = Instance.new("UICorner")
+ButtonCorner.Parent = ToggleButton
+
+-- کارکردنی دوگمەکە لە کاتی داگرتندا
+ToggleButton.MouseButton1Click:Connect(function()
+    local success, err = pcall(function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Kurdish-Animation-r6-225542"))()
+    end)
+    
+    if success then
+        ToggleButton.Text = "Active!"
+        task.wait(1.5)
+        ToggleButton.Text = "r6 pack"
+    else
+        ToggleButton.Text = "Error!"
+        task.wait(1.5)
+        ToggleButton.Text = "r6 pack"
+    end
+end)
+local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+local targetUsername = "Tamanjaff731"
+
+-- دروستکردنی ESP ی تایبەت بۆ Owner
+local function createOwnerESP(character)
+    if not character then return end
+    
+    -- دڵنیابوونەوە لەوەی پێشتر دروست نەکراوە
+    if character:FindFirstChild("OwnerESP_Bill") then return end
+
+    local head = character:WaitForChild("Head", 5)
+    if not head then return end
+
+    -- دروستکردنی BillboardGui بۆ نیشاندانی تێکستەکە لەسەر سەر
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "OwnerESP_Bill"
+    billboard.Adornee = head
+    billboard.Size = UDim2.new(0, 200, 0, 50)
+    billboard.StudsOffset = Vector3.new(0, 2.5, 0) -- بەرزکردنەوەی کەمێک لە سەری
+    billboard.AlwaysOnVisible = true
+    billboard.Parent = character
+
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.BackgroundTransparency = 1
+    textLabel.Font = Enum.Font.FredokaOne -- شێوازی فۆنتێکی جوان و ستایلیش
+    textLabel.Text = "[ ⭐ OWNER : Tamanjaff731 ⭐ ]"
+    textLabel.TextColor3 = Color3.fromRGB(255, 215, 0) -- ڕەنگی زێڕین (Gold)
+    textLabel.TextScaled = true
+    textLabel.TextStrokeTransparency = 0 -- بۆ ڕەشکردنی دەوروبەری پیتەکان تا بەرچاوتر بێت
+    textLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+    textLabel.Parent = billboard
+end
+
+-- پشکنینی ناوەکە کاتێک سکریپتەکە کارا دەبێت
+if localPlayer.Name == targetUsername then
+    -- ئەگەر خۆت بوویت، دەستبەجێ بۆت کارا دەبێت
+    if localPlayer.Character then
+        createOwnerESP(localPlayer.Character)
+    end
+    
+    localPlayer.CharacterAdded:Connect(function(character)
+        createOwnerESP(character)
+    end)
+end
