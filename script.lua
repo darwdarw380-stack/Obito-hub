@@ -1,4 +1,4 @@
--- Obito-- Obito Hub - Ultimate Secure Global Chat & Custom Timed Anti-AFK for Kurdish Obby | obito_dev6
+-- Obito Hub - Ultimate Secure Global Chat & Custom Timed Anti-AFK for Kurdish Obby | obito_dev6
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
@@ -1411,4 +1411,3 @@ ToggleButton.MouseButton1Click:Connect(function()
     visible = not visible
     MainFrame.Visible = visible
 end)
- Hub - Ultimate Secure Global Chat & Advanced Anti-AFK & Target Confirm | obito_dev6
