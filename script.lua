@@ -277,81 +277,8 @@ local function CreateToggleComponent(parent, name, callback)
     end)
 end
 
--- ADVANCED TARGET CONFIRMATION SYSTEM & NOTIFICATION UI
+-- PLACEHOLDER FOR SELECTED TARGET (No more click-to-select popup)
 local SelectedTarget = nil
-local PendingTarget = nil
-local Mouse = LocalPlayer:GetMouse()
-
-local NotifyFrame = Instance.new("Frame")
-NotifyFrame.Name = "NotifyFrame"
-NotifyFrame.Parent = ObitoGui
-NotifyFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
-NotifyFrame.BackgroundTransparency = 0.2
-NotifyFrame.Position = UDim2.new(1, -230, 0.75, 0)
-NotifyFrame.Size = UDim2.new(0, 220, 0, 75)
-NotifyFrame.Visible = false
-
-local NFCorner = Instance.new("UICorner")
-NFCorner.CornerRadius = UDim.new(0, 6)
-NFCorner.Parent = NotifyFrame
-
-local NotifyText = Instance.new("TextLabel")
-NotifyText.Parent = NotifyFrame
-NotifyText.BackgroundTransparency = 1
-NotifyText.Position = UDim2.new(0, 8, 0, 4)
-NotifyText.Size = UDim2.new(1, -16, 0, 35)
-NotifyText.Font = Enum.Font.GothamBold
-NotifyText.Text = "ئایا دڵنیای دەتەوێت ببیتە خاوەنی ئەم ئامانجە؟"
-NotifyText.TextColor3 = Color3.fromRGB(255, 255, 255)
-NotifyText.TextSize = 9
-NotifyText.TextWrapped = true
-
-local YesConfirmBtn = Instance.new("TextButton")
-YesConfirmBtn.Parent = NotifyFrame
-YesConfirmBtn.BackgroundColor3 = Color3.fromRGB(0, 180, 80)
-YesConfirmBtn.Position = UDim2.new(0, 8, 0, 43)
-YesConfirmBtn.Size = UDim2.new(0.48, -4, 0, 26)
-YesConfirmBtn.Font = Enum.Font.GothamBold
-YesConfirmBtn.Text = "بەڵێ (✔)"
-YesConfirmBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-YesConfirmBtn.TextSize = 9
-local YCBC = Instance.new("UICorner") YCBC.CornerRadius = UDim.new(0, 3) YCBC.Parent = YesConfirmBtn
-
-local NoConfirmBtn = Instance.new("TextButton")
-NoConfirmBtn.Parent = NotifyFrame
-NoConfirmBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
-NoConfirmBtn.Position = UDim2.new(0.52, 0, 0, 43)
-NoConfirmBtn.Size = UDim2.new(0.48, -4, 0, 26)
-NoConfirmBtn.Font = Enum.Font.GothamBold
-NoConfirmBtn.Text = "نەخێر (❌)"
-NoConfirmBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-NoConfirmBtn.TextSize = 9
-local NCBC = Instance.new("UICorner") NCBC.CornerRadius = UDim.new(0, 3) NCBC.Parent = NoConfirmBtn
-
-YesConfirmBtn.MouseButton1Click:Connect(function()
-    if PendingTarget then
-        SelectedTarget = PendingTarget
-        TargetImage.Image = Players:GetUserThumbnailAsync(SelectedTarget.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
-    end
-    NotifyFrame.Visible = false
-    PendingTarget = nil
-end)
-
-NoConfirmBtn.MouseButton1Click:Connect(function()
-    PendingTarget = nil
-    NotifyFrame.Visible = false
-end)
-
-Mouse.Button1Down:Connect(function()
-    if Mouse.Target and Mouse.Target.Parent:FindFirstChild("Humanoid") then
-        local foundPlayer = Players:GetPlayerFromCharacter(Mouse.Target.Parent)
-        if foundPlayer and foundPlayer ~= LocalPlayer then
-            PendingTarget = foundPlayer
-            NotifyText.Text = "دڵنیای دەتەوێت (" .. foundPlayer.Name .. ") بکەیتە ئامانج؟"
-            NotifyFrame.Visible = true
-        end
-    end
-end)
 
 -- ANTI-KICK FOR KURDISH OBBY TAB
 local AntiKickMainFrame = Instance.new("Frame")
@@ -887,7 +814,7 @@ local function KurdishToEnglish(text)
             return v
         end
     end
-    return "Translated: " + text
+    return "Translated: " .. text
 end
 
 CopyTransBtn.MouseButton1Click:Connect(function()
@@ -899,7 +826,7 @@ CopyTransBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- 💀 بەشی سەر بڕاوەکان (پێشکەوتوو: کاتی وەستان لەکاتی لادان و دەستپێکردنەوە لەکاتی هەڵبژاردن)
+-- 💀 بەشی سەر بڕاوەکان (پێشکەوتوو)
 local DuelMainScroll = Instance.new("ScrollingFrame")
 DuelMainScroll.Parent = Duels1v1Page
 DuelMainScroll.BackgroundTransparency = 1
@@ -927,7 +854,7 @@ local ActiveDuelFrame = Instance.new("Frame")
 ActiveDuelFrame.Parent = DuelMainScroll
 ActiveDuelFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
 ActiveDuelFrame.BackgroundTransparency = 0.5
-ActiveDuelFrame.Size = UDim2.new(1, -4, 0, 185)
+ActiveDuelFrame.Size = UDim2.new(1, -4, 0, 150)
 local ADFC = Instance.new("UICorner") ADFC.CornerRadius = UDim.new(0, 4) ADFC.Parent = ActiveDuelFrame
 
 local MyAvatar = Instance.new("ImageLabel")
@@ -952,22 +879,11 @@ DuelStatusLabel.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
 DuelStatusLabel.Position = UDim2.new(0, 8, 0, 82)
 DuelStatusLabel.Size = UDim2.new(1, -16, 0, 55)
 DuelStatusLabel.Font = Enum.Font.Gotham
-DuelStatusLabel.Text = "کەسێك بانگ بکە و چاوەڕێی لیفت بن (کاتژمێر، دەقە و سەانیە)..."
+DuelStatusLabel.Text = "تۆمارکەری لێفت و هاتنەوەی یاریزانەکان کارایە..."
 DuelStatusLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 DuelStatusLabel.TextSize = 9
 DuelStatusLabel.TextWrapped = true
 local DSLC = Instance.new("UICorner") DSLC.CornerRadius = UDim.new(0, 4) DSLC.Parent = DuelStatusLabel
-
-local ResetTargetBtn = Instance.new("TextButton")
-ResetTargetBtn.Parent = ActiveDuelFrame
-ResetTargetBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
-ResetTargetBtn.Position = UDim2.new(0, 8, 0, 145)
-ResetTargetBtn.Size = UDim2.new(1, -16, 0, 30)
-ResetTargetBtn.Font = Enum.Font.GothamBold
-ResetTargetBtn.Text = "🔄 لابردن و ڕاگرتنی کاتی ئامانج (Reset Target)"
-ResetTargetBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-ResetTargetBtn.TextSize = 9
-local RTBC = Instance.new("UICorner") RTBC.CornerRadius = UDim.new(0, 4) RTBC.Parent = ResetTargetBtn
 
 local HistoryHeader = Instance.new("TextLabel")
 HistoryHeader.Parent = DuelMainScroll
@@ -990,113 +906,44 @@ HCLayout.SortOrder = Enum.SortOrder.LayoutOrder
 HCLayout.Padding = UDim.new(0, 5)
 
 local trackedEnemiesData = {}
-local totalSecondsElapsed = 0
-local isDuelActive = false
-local lastSelectedTargetId = nil
-
-task.spawn(function()
-    while true do
-        task.wait(1)
-        if isDuelActive and SelectedTarget then
-            totalSecondsElapsed = totalSecondsElapsed + 1
-        end
-    end
-end)
-
-local function FormatTime(secs)
-    local h = math.floor(secs / 3600)
-    local m = math.floor((secs % 3600) / 60)
-    local s = secs % 60
-    return string.format("%02d:%02d:%02d", h, m, s)
-end
-
-ResetTargetBtn.MouseButton1Click:Connect(function()
-    SelectedTarget = nil
-    isDuelActive = false
-    lastSelectedTargetId = nil
-    EnemyAvatar.Image = "rbxassetid://0"
-    TargetImage.Image = "rbxassetid://0"
-    DuelStatusLabel.Text = "⏹ کات ڕاگیرا و ئامانج لادرا. کەسێکی تر هەڵبژێرە..."
-end)
-
-RunService.Heartbeat:Connect(function()
-    if SelectedTarget and SelectedTarget.Parent then
-        EnemyAvatar.Image = Players:GetUserThumbnailAsync(SelectedTarget.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
-        
-        if lastSelectedTargetId ~= SelectedTarget.UserId then
-            lastSelectedTargetId = SelectedTarget.UserId
-            isDuelActive = true -- Resume timer when new target is selected!
-        elseif not isDuelActive then
-            isDuelActive = true
-        end
-        
-        local currentData = trackedEnemiesData[SelectedTarget.UserId]
-        local leftC = currentData and currentData.leftCount or 0
-        local joinC = currentData and currentData.joinCount or 1
-        
-        DuelStatusLabel.Text = "👑 ئامانج: " .. SelectedTarget.Name .. 
-            "\n⏱️ کات و ماوە: " .. FormatTime(totalSecondsElapsed) .. " (کارایە)" ..
-            "\n❌ ژمارەی لێفت: " .. leftC .. " جار | 🟢 هاتنەوە: " .. joinC .. " جار"
-    else
-        if SelectedTarget and not SelectedTarget.Parent then
-            isDuelActive = false
-            local currentData = trackedEnemiesData[SelectedTarget.UserId]
-            local leftC = currentData and currentData.leftCount or 0
-            local joinC = currentData and currentData.joinCount or 1
-            DuelStatusLabel.Text = "👑 ئامانج: " .. SelectedTarget.Name .. " (لێفتی کرد - کات ڕاگیرا ⏹)" ..
-                "\n⏱️ کۆتا کات: " .. FormatTime(totalSecondsElapsed) .. 
-                "\n❌ ژمارەی لێفت: " .. leftC .. " جار | 🟢 هاتنەوە: " .. joinC .. " جار"
-        elseif not SelectedTarget then
-            isDuelActive = false
-            lastSelectedTargetId = nil
-            DuelStatusLabel.Text = "کەسێك بانگ بکە و چاوەڕێی لیفت بن (کاتژمێر، دەقە و سەانیە)..."
-        end
-    end
-end)
 
 Players.PlayerRemoving:Connect(function(player)
-    if SelectedTarget and player == SelectedTarget then
-        isDuelActive = false
+    if not trackedEnemiesData[player.UserId] then
+        trackedEnemiesData[player.UserId] = { name = player.Name, leftCount = 0, joinCount = 1 }
     end
-
-    if trackedEnemiesData[player.UserId] or (SelectedTarget and player == SelectedTarget) then
-        if not trackedEnemiesData[player.UserId] then
-            trackedEnemiesData[player.UserId] = { name = player.Name, leftCount = 0, joinCount = 1 }
-        end
-        trackedEnemiesData[player.UserId].leftCount = trackedEnemiesData[player.UserId].leftCount + 1
-        local lCount = trackedEnemiesData[player.UserId].leftCount
+    trackedEnemiesData[player.UserId].leftCount = trackedEnemiesData[player.UserId].leftCount + 1
+    local lCount = trackedEnemiesData[player.UserId].leftCount
+    
+    pcall(function()
+        local HistoryItem = Instance.new("Frame")
+        HistoryItem.Parent = HistoryContainer
+        HistoryItem.BackgroundColor3 = Color3.fromRGB(25, 20, 30)
+        HistoryItem.BackgroundTransparency = 0.3
+        HistoryItem.Size = UDim2.new(1, -4, 0, 48)
+        local HIC = Instance.new("UICorner") HIC.CornerRadius = UDim.new(0, 4) HIC.Parent = HistoryItem
         
-        pcall(function()
-            local HistoryItem = Instance.new("Frame")
-            HistoryItem.Parent = HistoryContainer
-            HistoryItem.BackgroundColor3 = Color3.fromRGB(25, 20, 30)
-            HistoryItem.BackgroundTransparency = 0.3
-            HistoryItem.Size = UDim2.new(1, -4, 0, 48)
-            local HIC = Instance.new("UICorner") HIC.CornerRadius = UDim.new(0, 4) HIC.Parent = HistoryItem
-            
-            local HistThumb = Instance.new("ImageLabel")
-            HistThumb.Parent = HistoryItem
-            HistThumb.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
-            HistThumb.Position = UDim2.new(0, 6, 0.5, -16)
-            HistThumb.Size = UDim2.new(0, 32, 0, 32)
-            HistThumb.Image = Players:GetUserThumbnailAsync(player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
-            local HTC = Instance.new("UICorner") HTC.CornerRadius = UDim.new(1, 0) HTC.Parent = HistThumb
-            
-            local HistText = Instance.new("TextLabel")
-            HistText.Parent = HistoryItem
-            HistText.BackgroundTransparency = 1
-            HistText.Position = UDim2.new(0, 46, 0, 0)
-            HistText.Size = UDim2.new(1, -52, 1, 0)
-            HistText.Font = Enum.Font.GothamBold
-            HistText.Text = player.Name .. " ➔ لێفتی کرد! (لێفت ژمارە " .. lCount .. ") لە کات " .. os.date("%H:%M:%S") .. " ❌"
-            HistText.TextColor3 = Color3.fromRGB(255, 90, 90)
-            HistText.TextSize = 9
-            HistText.TextXAlignment = Enum.TextXAlignment.Left
-            
-            HistoryContainer.Size = UDim2.new(1, -4, 0, HCLayout.AbsoluteContentSize.Y + 40)
-            DuelMainScroll.CanvasSize = UDim2.new(0, 0, 0, HCLayout.AbsoluteContentSize.Y + 220)
-        end)
-    end
+        local HistThumb = Instance.new("ImageLabel")
+        HistThumb.Parent = HistoryItem
+        HistThumb.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+        HistThumb.Position = UDim2.new(0, 6, 0.5, -16)
+        HistThumb.Size = UDim2.new(0, 32, 0, 32)
+        HistThumb.Image = Players:GetUserThumbnailAsync(player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
+        local HTC = Instance.new("UICorner") HTC.CornerRadius = UDim.new(1, 0) HTC.Parent = HistThumb
+        
+        local HistText = Instance.new("TextLabel")
+        HistText.Parent = HistoryItem
+        HistText.BackgroundTransparency = 1
+        HistText.Position = UDim2.new(0, 46, 0, 0)
+        HistText.Size = UDim2.new(1, -52, 1, 0)
+        HistText.Font = Enum.Font.GothamBold
+        HistText.Text = player.Name .. " ➔ لێفتی کرد! (لێفت ژمارە " .. lCount .. ") لە کات " .. os.date("%H:%M:%S") .. " ❌"
+        HistText.TextColor3 = Color3.fromRGB(255, 90, 90)
+        HistText.TextSize = 9
+        HistText.TextXAlignment = Enum.TextXAlignment.Left
+        
+        HistoryContainer.Size = UDim2.new(1, -4, 0, HCLayout.AbsoluteContentSize.Y + 40)
+        DuelMainScroll.CanvasSize = UDim2.new(0, 0, 0, HCLayout.AbsoluteContentSize.Y + 220)
+    end)
 end)
 
 Players.PlayerAdded:Connect(function(player)
@@ -1139,12 +986,23 @@ Players.PlayerAdded:Connect(function(player)
     end
 end)
 
--- TROLL TAB (Safe Protected Execution)
+-- TROLL TAB (Safe Protected Execution without Target Dependency)
 local function setSafePlatform(state)
     pcall(function()
         local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
         if hum then hum.PlatformStand = state end
     end)
+end
+
+-- Helper to find any available random player for Troll features if no target is clicked
+local function GetRandomTarget()
+    local players = Players:GetPlayers()
+    for _, p in pairs(players) do
+        if p ~= LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+            return p
+        end
+    end
+    return nil
 end
 
 local R6SitBangActive = false
@@ -1153,12 +1011,13 @@ CreateToggleComponent(MainTabPage, "💺 R6 دانیشتن و تەکان بۆ د
     task.spawn(function()
         while R6SitBangActive do
             RunService.RenderStepped:Wait()
-            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("Head") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local target = SelectedTarget or GetRandomTarget()
+            if target and target.Character and target.Character:FindFirstChild("Head") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
                 if hum then hum.Sit = true end
                 local speed = tick() * 120
                 local thrust = math.sin(speed) * 0.5
-                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.Head.CFrame * CFrame.new(0, 0.15, -0.6 + thrust) * CFrame.Angles(0, math.pi, 0)
+                LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.Head.CFrame * CFrame.new(0, 0.15, -0.6 + thrust) * CFrame.Angles(0, math.pi, 0)
             end
         end
         setSafePlatform(false)
@@ -1173,10 +1032,11 @@ CreateToggleComponent(MainTabPage, "⚡ بانگی هایپەری زۆر خێر�
     task.spawn(function()
         while HyperBangActive do
             RunService.RenderStepped:Wait()
-            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local target = SelectedTarget or GetRandomTarget()
+            if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 setSafePlatform(true)
                 local hOffset = math.sin(tick() * 140) * 0.9
-                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0.5 + hOffset) * CFrame.Angles(math.rad(30), 0, 0)
+                LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0.5 + hOffset) * CFrame.Angles(math.rad(30), 0, 0)
             end
         end
         setSafePlatform(false)
@@ -1189,10 +1049,11 @@ CreateToggleComponent(MainTabPage, "🔥 بانگی ئۆبیتۆ پرایم (Obi
     task.spawn(function()
         while PrimeBangActive do
             task.wait(0.002)
-            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local target = SelectedTarget or GetRandomTarget()
+            if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 setSafePlatform(true)
                 local off = math.abs(math.sin(tick() * 55)) * 1.3
-                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0.5 + off) * CFrame.Angles(math.rad(20), 0, 0)
+                LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0.5 + off) * CFrame.Angles(math.rad(20), 0, 0)
             end
         end
         setSafePlatform(false)
@@ -1205,8 +1066,9 @@ CreateToggleComponent(MainTabPage, "💋 ماچی ناودەم (Mouth Kiss Attac
     task.spawn(function()
         while MouthKissActive do
             task.wait(0.002)
-            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("Head") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Head") then
-                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.Head.CFrame * CFrame.new(0, 0, -0.6) * CFrame.Angles(0, math.pi, 0)
+            local target = SelectedTarget or GetRandomTarget()
+            if target and target.Character and target.Character:FindFirstChild("Head") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Head") then
+                LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.Head.CFrame * CFrame.new(0, 0, -0.6) * CFrame.Angles(0, math.pi, 0)
             end
         end
     end)
@@ -1218,10 +1080,11 @@ CreateToggleComponent(MainTabPage, "🍑 بانگی ژێرەوە و پشت (Bott
     task.spawn(function()
         while BangBottomActive do
             task.wait(0.002)
-            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local target = SelectedTarget or GetRandomTarget()
+            if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 setSafePlatform(true)
                 local off = math.sin(tick() * 65) * 1.2
-                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(0, -0.1, 0.7 + off) * CFrame.Angles(0, 0, 0)
+                LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.new(0, -0.1, 0.7 + off) * CFrame.Angles(0, 0, 0)
             end
         end
         setSafePlatform(false)
@@ -1234,13 +1097,14 @@ CreateToggleComponent(MainTabPage, "🌪️ سووڕانەوە و بانگی خ�
     task.spawn(function()
         while UltraFastOrbitActive do
             RunService.RenderStepped:Wait()
-            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local target = SelectedTarget or GetRandomTarget()
+            if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 setSafePlatform(true)
                 local angle = tick() * 45
                 local x = math.cos(angle) * 2.5
                 local z = math.sin(angle) * 2.5
                 local th = math.sin(tick() * 110) * 0.4
-                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(x, th, z) * CFrame.Angles(0, -angle, 0)
+                LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.new(x, th, z) * CFrame.Angles(0, -angle, 0)
             end
         end
         setSafePlatform(false)
@@ -1253,11 +1117,12 @@ CreateToggleComponent(MainTabPage, "💥 بانگی شێتی خێرای بێوە
     task.spawn(function()
         while MegaSpazBangActive do
             RunService.RenderStepped:Wait()
-            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local target = SelectedTarget or GetRandomTarget()
+            if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 setSafePlatform(true)
                 local rx = math.random(-200, 200) / 100
                 local rz = math.random(-200, 200) / 100
-                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(rx, 0.2, rz) * CFrame.Angles(math.random(-5,5), math.random(-5,5), 0)
+                LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.new(rx, 0.2, rz) * CFrame.Angles(math.random(-5,5), math.random(-5,5), 0)
             end
         end
         setSafePlatform(false)
@@ -1270,10 +1135,11 @@ CreateToggleComponent(MainTabPage, "🚀 بانگی مووشەکی بەرەو ئ
     task.spawn(function()
         while VerticalRocketBangActive do
             RunService.RenderStepped:Wait()
-            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local target = SelectedTarget or GetRandomTarget()
+            if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 setSafePlatform(true)
                 local upOffset = math.sin(tick() * 90) * 2.5
-                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(0, upOffset, 0.4) * CFrame.Angles(math.rad(90), 0, 0)
+                LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.new(0, upOffset, 0.4) * CFrame.Angles(math.rad(90), 0, 0)
             end
         end
         setSafePlatform(false)
@@ -1286,11 +1152,12 @@ CreateToggleComponent(MainTabPage, "🌋 بانگی بوومەلەرزە (Earthq
     task.spawn(function()
         while EarthquakeBangActive do
             task.wait(0.01)
-            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local target = SelectedTarget or GetRandomTarget()
+            if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 setSafePlatform(true)
                 local qx = (math.random() - 0.5) * 1.5
                 local qz = (math.random() - 0.5) * 1.5
-                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(qx, 0, 0.6 + qz) * CFrame.Angles(0, 0, 0)
+                LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.new(qx, 0, 0.6 + qz) * CFrame.Angles(0, 0, 0)
             end
         end
         setSafePlatform(false)
@@ -1303,9 +1170,10 @@ CreateToggleComponent(MainTabPage, "🛡️ بانگی پارێزراوی نەر
     task.spawn(function()
         while SmoothTrollBangActive do
             task.wait(0.003)
-            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local target = SelectedTarget or GetRandomTarget()
+            if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 local smoothOffset = math.sin(tick() * 25) * 0.8
-                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 1.2 + smoothOffset)
+                LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 1.2 + smoothOffset)
             end
         end
     end)
@@ -1317,8 +1185,9 @@ CreateToggleComponent(MainTabPage, "👻 بانگی پشتەوەی خێرا (Beh
     task.spawn(function()
         while BehindTeleportBangActive do
             task.wait(0.1)
-            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 2.5) * CFrame.Angles(0, math.pi, 0)
+            local target = SelectedTarget or GetRandomTarget()
+            if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 2.5) * CFrame.Angles(0, math.pi, 0)
             end
         end
     end)
@@ -1330,10 +1199,11 @@ CreateToggleComponent(MainTabPage, "🔄 بانگی سووڕانەوەی ٣٦٠ 
     task.spawn(function()
         while Spin360BangActive do
             RunService.RenderStepped:Wait()
-            if SelectedTarget and SelectedTarget.Character and SelectedTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local target = SelectedTarget or GetRandomTarget()
+            if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 setSafePlatform(true)
                 local rotAngle = tick() * 20
-                LocalPlayer.Character.HumanoidRootPart.CFrame = SelectedTarget.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 1) * CFrame.Angles(0, rotAngle, 0)
+                LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 1) * CFrame.Angles(0, rotAngle, 0)
             end
         end
         setSafePlatform(false)
@@ -1410,4 +1280,42 @@ local visible = true
 ToggleButton.MouseButton1Click:Connect(function()
     visible = not visible
     MainFrame.Visible = visible
+end)
+-- Obito Hub - Custom Target Selection Tool (Click Tool)
+local Tool = Instance.new("Tool")
+Tool.Name = "Obito Target Tool"
+Tool.RequiresHandle = false
+Tool.Parent = LocalPlayer.Backpack
+
+-- بۆ دڵنیابوون لەوەی ئەگەر مردیش ملهوڕ نەبێت و بگەڕێتەوە جانتا
+LocalPlayer.CharacterAdded:Connect(function(newChar)
+    task.wait(1)
+    if not LocalPlayer.Backpack:FindFirstChild("Obito Target Tool") and not newChar:FindFirstChild("Obito Target Tool") then
+        Tool:Clone().Parent = LocalPlayer.Backpack
+    end
+end)
+
+Tool.Activated:Connect(function()
+    local mouse = LocalPlayer:GetMouse()
+    if mouse.Target and mouse.Target.Parent:FindFirstChild("Humanoid") then
+        local foundPlayer = Players:GetPlayerFromCharacter(mouse.Target.Parent)
+        if foundPlayer and foundPlayer ~= LocalPlayer then
+            -- لێرەدا دەبێتە ئامانجی سەرەکی سکریپتەکە
+            SelectedTarget = foundPlayer
+            
+            -- ئەگەر وێنەی تارجێت لە تۆپبارەکە هەبێت، دەگۆڕێت
+            pcall(function()
+                TargetImage.Image = Players:GetUserThumbnailAsync(SelectedTarget.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
+            end)
+            
+            -- نیشاندانی ئاگادارییەکی خێرا (Notification)
+            pcall(function()
+                NotifyText.Text = "🎯 ئامانج هەڵبژێردرا: " .. foundPlayer.Name
+                NotifyFrame.Visible = true
+                task.delay(2, function()
+                    NotifyFrame.Visible = false
+                end)
+            end)
+        end
+    end
 end)
