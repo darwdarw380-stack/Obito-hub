@@ -1,4 +1,4 @@
--- Obito Hub - Ultimate Secure Global Chat & Advanced Anti-AFK & Target Confirm | obito_dev6
+-- Obito-- Obito Hub - Ultimate Secure Global Chat & Custom Timed Anti-AFK for Kurdish Obby | obito_dev6
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
@@ -282,7 +282,6 @@ local SelectedTarget = nil
 local PendingTarget = nil
 local Mouse = LocalPlayer:GetMouse()
 
--- Small Notification Popup Frame on the Right Side
 local NotifyFrame = Instance.new("Frame")
 NotifyFrame.Name = "NotifyFrame"
 NotifyFrame.Parent = ObitoGui
@@ -359,26 +358,120 @@ local AntiKickMainFrame = Instance.new("Frame")
 AntiKickMainFrame.Parent = AntiKickObbyPage
 AntiKickMainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
 AntiKickMainFrame.BackgroundTransparency = 0.5
-AntiKickMainFrame.Size = UDim2.new(1, -4, 0, 160)
+AntiKickMainFrame.Size = UDim2.new(1, -4, 0, 260)
 local AKMFC = Instance.new("UICorner") AKMFC.CornerRadius = UDim.new(0, 4) AKMFC.Parent = AntiKickMainFrame
 
 local AntiKickStatus = Instance.new("TextLabel")
 AntiKickStatus.Parent = AntiKickMainFrame
 AntiKickStatus.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
 AntiKickStatus.Position = UDim2.new(0, 6, 0, 8)
-AntiKickStatus.Size = UDim2.new(1, -12, 0, 50)
+AntiKickStatus.Size = UDim2.new(1, -12, 0, 45)
 AntiKickStatus.Font = Enum.Font.GothamBold
-AntiKickStatus.Text = "🛡️ Anti-Kick For Kurdish Obby کارایە\nسیستەمەکە ئێستا ١٠٠٪ پارێزراوە و نایەڵێت هەڵەی 267 و دەرکردن ڕووبدات!"
+AntiKickStatus.Text = "🛡️ Anti-AFK & Infinite Jump کارایە\nکاتی دیاریکراو دابنە و دوگمە بخەرە کار!"
 AntiKickStatus.TextColor3 = Color3.fromRGB(0, 255, 120)
 AntiKickStatus.TextSize = 9
 AntiKickStatus.TextWrapped = true
 local AKSC = Instance.new("UICorner") AKSC.CornerRadius = UDim.new(0, 3) AKSC.Parent = AntiKickStatus
 
-CreateToggleComponent(AntiKickObbyPage, "🔒 چالاککردنی دژە دەرکردنی بەهێز (Absolute Anti-Kick)", function(state)
-    if state then
-        AntiKickStatus.Text = "🛡️ پاراستنی توند کارا کرا! دەرکردن و Error 267 بە تەواوی قەدەغە کرا."
+local TimeInputBox = Instance.new("TextBox")
+TimeInputBox.Parent = AntiKickMainFrame
+TimeInputBox.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
+TimeInputBox.Position = UDim2.new(0, 6, 0, 60)
+TimeInputBox.Size = UDim2.new(1, -12, 0, 36)
+TimeInputBox.Font = Enum.Font.GothamBold
+TimeInputBox.PlaceholderText = "کاتی سەعات بنووسە (لە 1 بۆ 999 سەعات)..."
+TimeInputBox.Text = "1"
+TimeInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TimeInputBox.TextSize = 10
+local TIBC = Instance.new("UICorner") TIBC.CornerRadius = UDim.new(0, 3) TIBC.Parent = TimeInputBox
+
+local AFKToggleBtn = Instance.new("TextButton")
+AFKToggleBtn.Parent = AntiKickMainFrame
+AFKToggleBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+AFKToggleBtn.Position = UDim2.new(0, 6, 0, 104)
+AFKToggleBtn.Size = UDim2.new(1, -12, 0, 42)
+AFKToggleBtn.Font = Enum.Font.GothamBold
+AFKToggleBtn.Text = "❌ ئەنتی ئەیفەکەی نەخراوەتە ئیش"
+AFKToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+AFKToggleBtn.TextSize = 10
+local ATBC = Instance.new("UICorner") ATBC.CornerRadius = UDim.new(0, 3) ATBC.Parent = AFKToggleBtn
+
+local TimerCountdownLabel = Instance.new("TextLabel")
+TimerCountdownLabel.Parent = AntiKickMainFrame
+TimerCountdownLabel.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
+TimerCountdownLabel.Position = UDim2.new(0, 6, 0, 154)
+TimerCountdownLabel.Size = UDim2.new(1, -12, 0, 40)
+TimerCountdownLabel.Font = Enum.Font.GothamBold
+TimerCountdownLabel.Text = "⏳ ماوەی ماوە: 00:00:00"
+TimerCountdownLabel.TextColor3 = Color3.fromRGB(255, 215, 0)
+TimerCountdownLabel.TextSize = 9
+local TCLD = Instance.new("UICorner") TCLD.CornerRadius = UDim.new(0, 3) TCLD.Parent = TimerCountdownLabel
+
+local VirtualUser = game:GetService("VirtualUser")
+LocalPlayer.Idled:Connect(function()
+    pcall(function()
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton2(Vector2.new())
+    end)
+end)
+
+local obbyAfkActive = false
+local afkLoopThread = nil
+
+AFKToggleBtn.MouseButton1Click:Connect(function()
+    obbyAfkActive = not obbyAfkActive
+    if obbyAfkActive then
+        AFKToggleBtn.BackgroundColor3 = Color3.fromRGB(0, 180, 80)
+        AFKToggleBtn.Text = "✔ نوسراوە و کارا کرا! (Active)"
+        AntiKickStatus.Text = "🛡️ Anti-AFK & Infinite Jump بۆ کوردش ئۆبی کارا بوو بە سەرکەوتوویی!"
+        
+        local hoursVal = tonumber(TimeInputBox.Text) or 1
+        hoursVal = math.clamp(hoursVal, 1, 999)
+        local totalSeconds = hoursVal * 3600
+        
+        afkLoopThread = task.spawn(function()
+            local elapsed = 0
+            while obbyAfkActive and elapsed < totalSeconds do
+                pcall(function()
+                    local char = LocalPlayer.Character
+                    if char and char:FindFirstChild("Humanoid") then
+                        char.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                    end
+                end)
+                
+                local rem = totalSeconds - elapsed
+                local h = math.floor(rem / 3600)
+                local m = math.floor((rem % 3600) / 60)
+                local s = rem % 60
+                TimerCountdownLabel.Text = string.format("⏳ ماوەی ماوە: %02d:%02d:%02d (جەمپی بەردەوام کارایە)", h, m, s)
+                
+                task.wait(1)
+                elapsed = elapsed + 1
+            end
+            
+            obbyAfkActive = false
+            AFKToggleBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+            AFKToggleBtn.Text = "❌ ئەنتی ئەیفەکەی نەخراوەتە ئیش"
+            TimerCountdownLabel.Text = "⏳ کاتی دیاریکراو تەواو بوو!"
+        end)
     else
-        AntiKickStatus.Text = "⚠ ئاگاداری: پاراستن کەمکرایەوە!"
+        obbyAfkActive = false
+        if afkLoopThread then
+            task.cancel(afkLoopThread)
+            afkLoopThread = nil
+        end
+        AFKToggleBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+        AFKToggleBtn.Text = "❌ ئەنتی ئەیفەکەی نەخراوەتە ئیش"
+        AntiKickStatus.Text = "⚠ ئەنتی ئەیفەکەی ڕاگیرا."
+        TimerCountdownLabel.Text = "⏳ ماوەی ماوە: 00:00:00"
+    end
+end)
+
+CreateToggleComponent(AntiKickObbyPage, "🔒 پاراستنی توند دژی دەرکردن (Absolute Anti-Error 267)", function(state)
+    if state then
+        AntiKickStatus.Text = "🛡️ سیستەمی دژە لێفت و دەرکردن زۆر بە‌هێز کارا کرا!"
+    else
+        AntiKickStatus.Text = "⚠ ئاگاداری: پاراستن کەمکرایەوە."
     end
 end)
 
@@ -639,7 +732,7 @@ for i, songData in ipairs(SongCodesList) do
     end)
 end
 
--- ANTI TAB COMPONENTS (WITH POWERFUL ANTI-AFK)
+-- ANTI TAB COMPONENTS
 local AntiBangFloatingBtn = Instance.new("TextButton")
 AntiBangFloatingBtn.Name = "AntiBangFloatingBtn"
 AntiBangFloatingBtn.Parent = ObitoGui
@@ -731,30 +824,7 @@ CreateToggleComponent(AntiTabPage, "🌪️ ئەنتی فڵینگ (Anti Fling)",
     end)
 end)
 
-local UltimateAntiAFKActive = false
-CreateToggleComponent(AntiTabPage, "🏴󐁧󐁢󐁥󐁮󐁧󐁿 بەقەوترین ئەنتی AFK (جەمپی بەردەوام)", function(state)
-    UltimateAntiAFKActive = state
-    task.spawn(function()
-        while UltimateAntiAFKActive do
-            task.wait(15)
-            pcall(function()
-                if UltimateAntiAFKActive then
-                    local char = LocalPlayer.Character
-                    local hum = char and char:FindFirstChildOfClass("Humanoid")
-                    if hum then
-                        hum:ChangeState(Enum.HumanoidStateType.Jumping)
-                    end
-                    local vu = game:GetService("VirtualUser")
-                    vu:Button2Down(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
-                    task.wait(1)
-                    vu:Button2Up(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
-                end
-            end)
-        end
-    end)
-end)
-
--- TRANSLATE TAB (KURDISH TO ENGLISH PROPER TRANSLATOR)
+-- TRANSLATE TAB
 local TransBoxFrame = Instance.new("Frame")
 TransBoxFrame.Parent = TranslateTabPage
 TransBoxFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
@@ -817,7 +887,7 @@ local function KurdishToEnglish(text)
             return v
         end
     end
-    return "Translated: " .. text
+    return "Translated: " + text
 end
 
 CopyTransBtn.MouseButton1Click:Connect(function()
@@ -829,7 +899,7 @@ CopyTransBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- 💀 بەشی سەر بڕاوەکان (پێشکەوتوو لەگەڵ کات، سات، سەانیە و چەند جار لێفت و هاتووەتەوە)
+-- 💀 بەشی سەر بڕاوەکان (پێشکەوتوو: کاتی وەستان لەکاتی لادان و دەستپێکردنەوە لەکاتی هەڵبژاردن)
 local DuelMainScroll = Instance.new("ScrollingFrame")
 DuelMainScroll.Parent = Duels1v1Page
 DuelMainScroll.BackgroundTransparency = 1
@@ -880,13 +950,24 @@ local DuelStatusLabel = Instance.new("TextLabel")
 DuelStatusLabel.Parent = ActiveDuelFrame
 DuelStatusLabel.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
 DuelStatusLabel.Position = UDim2.new(0, 8, 0, 82)
-DuelStatusLabel.Size = UDim2.new(1, -16, 0, 92)
+DuelStatusLabel.Size = UDim2.new(1, -16, 0, 55)
 DuelStatusLabel.Font = Enum.Font.Gotham
 DuelStatusLabel.Text = "کەسێك بانگ بکە و چاوەڕێی لیفت بن (کاتژمێر، دەقە و سەانیە)..."
 DuelStatusLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 DuelStatusLabel.TextSize = 9
 DuelStatusLabel.TextWrapped = true
 local DSLC = Instance.new("UICorner") DSLC.CornerRadius = UDim.new(0, 4) DSLC.Parent = DuelStatusLabel
+
+local ResetTargetBtn = Instance.new("TextButton")
+ResetTargetBtn.Parent = ActiveDuelFrame
+ResetTargetBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+ResetTargetBtn.Position = UDim2.new(0, 8, 0, 145)
+ResetTargetBtn.Size = UDim2.new(1, -16, 0, 30)
+ResetTargetBtn.Font = Enum.Font.GothamBold
+ResetTargetBtn.Text = "🔄 لابردن و ڕاگرتنی کاتی ئامانج (Reset Target)"
+ResetTargetBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ResetTargetBtn.TextSize = 9
+local RTBC = Instance.new("UICorner") RTBC.CornerRadius = UDim.new(0, 4) RTBC.Parent = ResetTargetBtn
 
 local HistoryHeader = Instance.new("TextLabel")
 HistoryHeader.Parent = DuelMainScroll
@@ -911,11 +992,12 @@ HCLayout.Padding = UDim.new(0, 5)
 local trackedEnemiesData = {}
 local totalSecondsElapsed = 0
 local isDuelActive = false
+local lastSelectedTargetId = nil
 
 task.spawn(function()
     while true do
         task.wait(1)
-        if isDuelActive then
+        if isDuelActive and SelectedTarget then
             totalSecondsElapsed = totalSecondsElapsed + 1
         end
     end
@@ -928,13 +1010,24 @@ local function FormatTime(secs)
     return string.format("%02d:%02d:%02d", h, m, s)
 end
 
+ResetTargetBtn.MouseButton1Click:Connect(function()
+    SelectedTarget = nil
+    isDuelActive = false
+    lastSelectedTargetId = nil
+    EnemyAvatar.Image = "rbxassetid://0"
+    TargetImage.Image = "rbxassetid://0"
+    DuelStatusLabel.Text = "⏹ کات ڕاگیرا و ئامانج لادرا. کەسێکی تر هەڵبژێرە..."
+end)
+
 RunService.Heartbeat:Connect(function()
     if SelectedTarget and SelectedTarget.Parent then
         EnemyAvatar.Image = Players:GetUserThumbnailAsync(SelectedTarget.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
         
-        if not isDuelActive then
+        if lastSelectedTargetId ~= SelectedTarget.UserId then
+            lastSelectedTargetId = SelectedTarget.UserId
+            isDuelActive = true -- Resume timer when new target is selected!
+        elseif not isDuelActive then
             isDuelActive = true
-            totalSecondsElapsed = 0
         end
         
         local currentData = trackedEnemiesData[SelectedTarget.UserId]
@@ -942,20 +1035,30 @@ RunService.Heartbeat:Connect(function()
         local joinC = currentData and currentData.joinCount or 1
         
         DuelStatusLabel.Text = "👑 ئامانج: " .. SelectedTarget.Name .. 
-            "\n⏱️ کات و ماوە: " .. FormatTime(totalSecondsElapsed) .. 
+            "\n⏱️ کات و ماوە: " .. FormatTime(totalSecondsElapsed) .. " (کارایە)" ..
             "\n❌ ژمارەی لێفت: " .. leftC .. " جار | 🟢 هاتنەوە: " .. joinC .. " جار"
     else
-        EnemyAvatar.Image = "rbxassetid://0"
-        if not SelectedTarget then
+        if SelectedTarget and not SelectedTarget.Parent then
             isDuelActive = false
-            totalSecondsElapsed = 0
+            local currentData = trackedEnemiesData[SelectedTarget.UserId]
+            local leftC = currentData and currentData.leftCount or 0
+            local joinC = currentData and currentData.joinCount or 1
+            DuelStatusLabel.Text = "👑 ئامانج: " .. SelectedTarget.Name .. " (لێفتی کرد - کات ڕاگیرا ⏹)" ..
+                "\n⏱️ کۆتا کات: " .. FormatTime(totalSecondsElapsed) .. 
+                "\n❌ ژمارەی لێفت: " .. leftC .. " جار | 🟢 هاتنەوە: " .. joinC .. " جار"
+        elseif not SelectedTarget then
+            isDuelActive = false
+            lastSelectedTargetId = nil
             DuelStatusLabel.Text = "کەسێك بانگ بکە و چاوەڕێی لیفت بن (کاتژمێر، دەقە و سەانیە)..."
         end
     end
 end)
 
--- Track Player Leave & Rejoin properly
 Players.PlayerRemoving:Connect(function(player)
+    if SelectedTarget and player == SelectedTarget then
+        isDuelActive = false
+    end
+
     if trackedEnemiesData[player.UserId] or (SelectedTarget and player == SelectedTarget) then
         if not trackedEnemiesData[player.UserId] then
             trackedEnemiesData[player.UserId] = { name = player.Name, leftCount = 0, joinCount = 1 }
@@ -1036,7 +1139,7 @@ Players.PlayerAdded:Connect(function(player)
     end
 end)
 
--- TROLL TAB
+-- TROLL TAB (Safe Protected Execution)
 local function setSafePlatform(state)
     pcall(function()
         local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
@@ -1288,34 +1391,24 @@ game:GetService("UserInputService").JumpRequest:Connect(function()
 end)
 CreateToggleComponent(PlayersTabPage, "🚀 بازدانی بێسنوور (Inf Jump)", function(state) InfJumpEnabled = state end)
 
--- Floating Toggle Button
-local ToggleButton = Instance.new("TextButton")
+-- Floating Toggle Button (Square Design with Custom Image ID)
+local ToggleButton = Instance.new("ImageButton")
 ToggleButton.Parent = ObitoGui
 ToggleButton.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
 ToggleButton.BackgroundTransparency = 0.3
 ToggleButton.Position = UDim2.new(0, 10, 0.4, 0)
 ToggleButton.Size = UDim2.new(0, 45, 0, 45)
-ToggleButton.Font = Enum.Font.GothamBold
-ToggleButton.Text = "O"
-ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleButton.TextSize = 20
+ToggleButton.Image = "rbxassetid://71011897552461"
 ToggleButton.Active = true
 ToggleButton.Draggable = true
 
 local TBCorner = Instance.new("UICorner")
-TBCorner.CornerRadius = UDim.new(1, 0)
+TBCorner.CornerRadius = UDim.new(0, 8)
 TBCorner.Parent = ToggleButton
-
-local TBGrad = Instance.new("UIGradient")
-TBGrad.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0.0, Color3.fromRGB(60, 60, 70)),
-    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(15, 15, 20)),
-    ColorSequenceKeypoint.new(1.0, Color3.fromRGB(5, 5, 10))
-}
-TBGrad.Parent = ToggleButton
 
 local visible = true
 ToggleButton.MouseButton1Click:Connect(function()
     visible = not visible
     MainFrame.Visible = visible
 end)
+ Hub - Ultimate Secure Global Chat & Advanced Anti-AFK & Target Confirm | obito_dev6
